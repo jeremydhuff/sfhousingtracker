@@ -1,0 +1,300 @@
+/* SF Housing Construction Tracker
+   Reference: the SF building-permit placard bolted to a plywood site fence -
+   manila paper, photocopied ink, blueprint blue, surveyor's notation.
+   Palette provenance:
+     --paper / --panel  manila permit envelope
+     --ink              photocopied permit text
+     --blueprint        blueprint linework      -> under construction
+     --ochre            weathered lumber / stamp -> permit issued or approved
+     --verdigris        oxidized copper flashing -> completed (appears ~once)
+*/
+
+@font-face { font-family: "Libre Franklin"; src: url("vendor/fonts/libre-franklin-700.woff2") format("woff2");
+  font-weight: 700; font-display: swap; }
+@font-face { font-family: "Libre Franklin"; src: url("vendor/fonts/libre-franklin-800.woff2") format("woff2");
+  font-weight: 800; font-display: swap; }
+@font-face { font-family: "Plex Mono"; src: url("vendor/fonts/plex-mono-400.woff2") format("woff2");
+  font-weight: 400; font-display: swap; }
+@font-face { font-family: "Plex Mono"; src: url("vendor/fonts/plex-mono-600.woff2") format("woff2");
+  font-weight: 600; font-display: swap; }
+
+/* Paper-first by design: this is a permit placard, not a screen UI. The palette
+   stays the same in OS dark mode - a muted off-white ground with dark blueprint /
+   ochre / verdigris ink reads the way the reference does. */
+:root {
+  color-scheme: light;
+
+  --paper: #f4f0e6;
+  --panel: #e9e2d0;
+  --panel-2: #ded4bb;
+  --ink: #12100e;
+  --faint: #6b6350;
+  --rule: #c3b795;
+  --rule-strong: #8f8156;
+  --blueprint: #1a3a5c;
+  --ochre: #9a5b12;
+  --verdigris: #2f6b4f;
+
+  --sans: "Libre Franklin", "Franklin Gothic Medium", Arial, sans-serif;
+  --mono: "Plex Mono", "SFMono-Regular", "Consolas", monospace;
+}
+
+* { box-sizing: border-box; }
+html, body { margin: 0; }
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--sans);
+  font-size: 15px;
+  line-height: 1.45;
+  -webkit-font-smoothing: antialiased;
+}
+a { color: inherit; text-decoration-color: var(--rule-strong); text-underline-offset: 2px; }
+h1, h2, h3 { font-weight: 800; letter-spacing: -0.02em; margin: 0; }
+
+.wrap { max-width: 1280px; margin: 0 auto; padding: 0 24px 80px; }
+
+/* ---------- masthead --------------------------------------------------- */
+.masthead {
+  border-bottom: 3px double var(--rule-strong);
+  padding: 22px 0 0;
+  margin-bottom: 22px;
+}
+.masthead .kicker {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--faint);
+}
+.masthead h1 {
+  font-size: clamp(34px, 6vw, 68px);
+  line-height: 0.98;
+  margin: 6px 0 4px;
+  max-width: 16ch;
+}
+.masthead .dateline {
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--faint);
+  margin-bottom: 18px;
+}
+
+/* standings row: the four figures, typeset like a scoreboard */
+.standings {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  border-top: 1px solid var(--rule);
+}
+.standings .fig {
+  padding: 12px 16px 14px 0;
+  border-right: 1px solid var(--rule);
+}
+.standings .fig:last-child { border-right: 0; }
+.standings .n {
+  font-family: var(--mono);
+  font-weight: 600;
+  font-size: clamp(24px, 3.4vw, 40px);
+  line-height: 1;
+  display: block;
+}
+.standings .fig.built   .n { color: var(--blueprint); }
+.standings .fig.permit  .n { color: var(--ochre); }
+.standings .fig.done    .n { color: var(--verdigris); }
+.standings .lbl {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--faint);
+  margin-top: 8px;
+  display: block;
+}
+.standings .sub { font-size: 11px; color: var(--faint); font-family: var(--mono); }
+.standings .done .yr {
+  font-size: 0.5em;
+  vertical-align: super;
+  color: var(--faint);
+}
+.standings .delta.up::before { content: "+"; }
+.standings .delta { color: var(--faint); }
+
+/* ---------- main split: map + ledger --------------------------------- */
+.split {
+  display: grid;
+  grid-template-columns: 1.85fr 1fr;
+  gap: 26px;
+  margin-top: 30px;
+}
+@media (max-width: 900px) { .split { grid-template-columns: 1fr; } }
+
+#map {
+  height: 560px;
+  border: 1px solid var(--rule-strong);
+  background: var(--panel);
+  filter: saturate(0.82);
+}
+.leaflet-container { background: var(--panel); font-family: var(--mono); }
+.map-frame .cap {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--faint);
+  margin-top: 6px;
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+.legend-key { display: inline-flex; align-items: center; gap: 6px; cursor: pointer; }
+.legend-key .g { width: 11px; height: 11px; display: inline-block; }
+.legend-key.off { opacity: 0.35; text-decoration: line-through; }
+.g.built { background: var(--blueprint); }
+.g.permit { background: var(--ochre); }
+.g.done { background: var(--verdigris); border-radius: 50%; }
+.g.hollow { border: 1.5px solid var(--ochre); background: transparent; transform: rotate(45deg); }
+
+/* ledger */
+.ledger h2, .charts h2, .index h2 {
+  font-size: 13px;
+  font-family: var(--mono);
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--faint);
+  border-bottom: 1px solid var(--rule-strong);
+  padding-bottom: 6px;
+  margin-bottom: 4px;
+}
+.ledger ol { list-style: none; margin: 0; padding: 0; }
+.ledger li {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: baseline;
+  gap: 8px;
+  padding: 7px 0;
+  border-bottom: 1px dotted var(--rule);
+  cursor: pointer;
+}
+.ledger li:hover { background: var(--panel); }
+.ledger li.active { background: var(--panel-2); box-shadow: inset 3px 0 0 var(--blueprint); }
+.ledger .place { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.ledger .place .sub { font-family: var(--mono); font-size: 11px; color: var(--faint); }
+.ledger .val { font-family: var(--mono); font-weight: 600; font-variant-numeric: tabular-nums; }
+.ledger .all { font-size: 11px; font-family: var(--mono); color: var(--faint); margin-top: 8px; cursor: pointer; }
+
+/* ---------- charts -------------------------------------------------- */
+.charts { margin-top: 40px; }
+.chart-grid {
+  display: grid;
+  grid-template-columns: 1.6fr 1fr;
+  gap: 30px 40px;
+  margin-top: 14px;
+}
+@media (max-width: 900px) { .chart-grid { grid-template-columns: 1fr; } }
+.chart .hd { font-weight: 700; font-size: 15px; margin-bottom: 2px; }
+.chart .note { font-family: var(--mono); font-size: 11px; color: var(--faint); margin-bottom: 8px; }
+.chart svg { width: 100%; height: auto; overflow: visible; display: block; }
+.chart svg text { font-family: var(--mono); fill: var(--faint); font-size: 10px; }
+.chart .gl { stroke: var(--rule); stroke-width: 1; }
+.chart .axis { stroke: var(--rule-strong); stroke-width: 1; }
+.series-cur { stroke: var(--blueprint); }
+.series-prev { stroke: var(--rule-strong); stroke-dasharray: 3 3; }
+.bar-uc { fill: var(--blueprint); }
+.bar-permit { fill: var(--ochre); }
+.bar-aff { fill: var(--verdigris); }
+
+/* ---------- project index (table) --------------------------------- */
+.index { margin-top: 48px; }
+.controls {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  align-items: center;
+  margin: 12px 0;
+  font-family: var(--mono);
+  font-size: 12px;
+}
+.controls input, .controls select {
+  font-family: var(--mono);
+  font-size: 12px;
+  padding: 6px 8px;
+  border: 1px solid var(--rule-strong);
+  background: var(--paper);
+  color: var(--ink);
+}
+.controls input { min-width: 200px; }
+.controls .clear { cursor: pointer; color: var(--faint); text-decoration: underline; }
+
+table.idx { width: 100%; border-collapse: collapse; font-family: var(--mono); font-size: 12.5px; }
+table.idx th {
+  text-align: left;
+  border-bottom: 2px solid var(--ink);
+  padding: 6px 10px 6px 0;
+  cursor: pointer;
+  white-space: nowrap;
+  font-weight: 600;
+}
+table.idx th .arr { color: var(--faint); }
+table.idx td { padding: 7px 10px 7px 0; border-bottom: 1px solid var(--rule); vertical-align: top; }
+table.idx tr:hover td { background: var(--panel); }
+table.idx .num { text-align: right; font-variant-numeric: tabular-nums; font-weight: 600; }
+table.idx .glyph { width: 14px; }
+table.idx .st-built .glyph::before { content: "\25A0"; color: var(--blueprint); }
+table.idx .st-permit .glyph::before { content: "\25E7"; color: var(--ochre); }
+table.idx .st-approved .glyph::before { content: "\25A1"; color: var(--ochre); }
+table.idx .replaces { color: var(--faint); }
+table.idx .addr { font-weight: 600; }
+
+/* ---------- hover card (project preview) -------------------------- */
+#card {
+  position: fixed;
+  z-index: 9999;
+  width: 260px;
+  background: var(--paper);
+  border: 1px solid var(--ink);
+  box-shadow: 5px 5px 0 rgba(18,16,14,0.18);
+  padding: 0;
+  pointer-events: none;
+  font-family: var(--mono);
+}
+#card img {
+  width: 100%;
+  height: 150px;
+  object-fit: cover;
+  display: block;
+  border-bottom: 1px solid var(--ink);
+  background: var(--panel-2);
+}
+#card .noimg {
+  height: 92px; display: flex; align-items: center; justify-content: center;
+  background: var(--panel-2); color: var(--faint); font-size: 11px;
+  border-bottom: 1px solid var(--ink); letter-spacing: 0.05em;
+}
+#card .body { padding: 9px 11px 11px; }
+#card .nm { font-family: var(--sans); font-weight: 700; font-size: 13.5px; line-height: 1.2; }
+#card .meta { font-size: 11px; color: var(--faint); margin-top: 3px; }
+#card .u { color: var(--blueprint); font-weight: 600; }
+#card .rep { font-size: 11px; margin-top: 6px; border-top: 1px dotted var(--rule); padding-top: 5px; }
+#card .rep b { color: var(--ink); font-weight: 600; }
+
+/* ---------- footer ------------------------------------------------- */
+footer {
+  margin-top: 60px;
+  border-top: 3px double var(--rule-strong);
+  padding-top: 16px;
+  font-family: var(--mono);
+  font-size: 11.5px;
+  color: var(--faint);
+  line-height: 1.7;
+}
+footer a { text-decoration: none; border-bottom: 1px solid var(--rule); }
+footer .src { display: flex; flex-wrap: wrap; gap: 4px 22px; margin-top: 6px; }
+footer .method {
+  margin-top: 10px;
+  padding: 10px 12px;
+  border-left: 2px solid var(--rule-strong);
+  background: var(--panel);
+  color: var(--ink);
+}
+
+.loading { font-family: var(--mono); color: var(--faint); padding: 40px 0; }

@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SF Housing Under Construction</title>
+<link rel="stylesheet" href="vendor/leaflet.css">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="wrap">
+
+  <header class="masthead">
+    <div class="kicker">San Francisco &middot; permit &amp; construction record</div>
+    <h1>Homes Getting Built Right Now</h1>
+    <div class="dateline" id="dateline">Loading the latest city data&hellip;</div>
+    <div class="standings" id="standings"></div>
+  </header>
+
+  <section class="split">
+    <div class="map-frame">
+      <div id="map"></div>
+      <div class="cap" id="maplegend"></div>
+    </div>
+    <div class="ledger">
+      <h2>Homes by neighborhood</h2>
+      <ol id="ledger"></ol>
+      <div class="all" id="ledger-clear" hidden>&larr; clear neighborhood filter</div>
+    </div>
+  </section>
+
+  <section class="charts">
+    <h2>The trend lines</h2>
+    <div class="chart-grid">
+      <div class="chart" id="chart-completions">
+        <div class="hd" id="cc-hd">Homes completed this year</div>
+        <div class="note" id="cc-note"></div>
+      </div>
+      <div class="chart" id="chart-stage">
+        <div class="hd">Active pipeline by stage</div>
+        <div class="note">Net new homes. Green = the affordable share.</div>
+      </div>
+      <div class="chart" id="chart-history">
+        <div class="hd">Under construction over time</div>
+        <div class="note" id="hist-note">Accrues one point per update.</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="index">
+    <h2>Every active project</h2>
+    <div class="controls">
+      <input type="search" id="q" placeholder="search address / name">
+      <select id="f-stage">
+        <option value="">both stages</option>
+        <option value="under_construction">under construction</option>
+        <option value="permitted">permitted</option>
+      </select>
+      <select id="f-nb"><option value="">all neighborhoods</option></select>
+      <span class="clear" id="tbl-clear">reset</span>
+      <span id="tbl-count"></span>
+    </div>
+    <div style="overflow-x:auto">
+      <table class="idx">
+        <thead><tr id="idx-head"></tr></thead>
+        <tbody id="idx-body"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <footer id="footer"></footer>
+</div>
+
+<div id="card" hidden></div>
+
+<script src="vendor/leaflet.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

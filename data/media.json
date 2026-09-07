@@ -1,0 +1,632 @@
+[
+ {
+  "project_id": "2007.1347",
+  "slug": "2007-1347",
+  "path": "media/2007-1347.jpg",
+  "source": "parcel_aerial",
+  "source_url": "https://www.arcgis.com/home/item.html?id=10df2279f9684e4a9f6a7f08febac2a9",
+  "caption": "The site today - aerial imagery (Esri World Imagery)",
+  "fetched_at": "2026-09-07T19:24:50.484145+00:00",
+  "bytes": 60519
+ },
+ {
+  "project_id": "2012.1384",
+  "slug": "2012-1384",
+  "path": "media/2012-1384.jpg",
+  "source": "parcel_aerial",
+  "source_url": "https://www.arcgis.com/home/item.html?id=10df2279f9684e4a9f6a7f08febac2a9",
+  "caption": "The site today \u2014 aerial imagery (Esri World Imagery)",
+  "fetched_at": "2026-09-07T06:39:55.262060+00:00",
+  "bytes": 56690
+ },
+ {
+  "project_id": "2016-000347PRJ",
+  "slug": "2016-000347prj",
+  "path": "media/2016-000347prj.jpg",
+  "source": "parcel_aerial",
+  "source_url": "https://www.arcgis.com/home/item.html?id=10df2279f9684e4a9f6a7f08febac2a9",
+  "caption": "The site today - aerial imagery (Esri World Imagery)",
+  "fetched_at": "2026-09-07T19:25:16.836467+00:00",
+  "bytes": 58870
+ },
+ {
+  "project_id": "2017-000605PRJ",
+  "slug": "2017-000605prj",
+  "path": "media/2017-000605prj.jpg",
+  "source": "parcel_aerial",
+  "source_url": "https://www.arcgis.com/home/item.html?id=10df2279f9684e4a9f6a7f08febac2a9",
+  "caption": "The site today - aerial imagery (Esri World Imagery)",
+  "fetched_at": "2026-09-07T19:25:26.487777+00:00",
+  "bytes": 57855
+ },
+ {
+  "project_id": "2018-003616PRJ",
+  "slug": "2018-003616prj",
+  "path": "media/2018-003616prj.jpg",
+  "source": "parcel_aerial",
+  "source_url": "https://www.arcgis.com/home/item.html?id=10df2279f9684e4a9f6a7f08febac2a9",
+  "caption": "The site today - aerial imagery (Esri World Imagery)",
+  "fetched_at": "2026-09-07T19:22:49.859637+00:00",
+  "bytes": 62754
+ },
+ {
+  "project_id": "2018-016721PRJ",
+  "slug": "2018-016721prj",
+  "path": "media/2018-016721prj.jpg",
+  "source": "parcel_aerial",
+  "source_url": "https://www.arcgis.com/home/item.html?id=10df2279f9684e4a9f6a7f08febac2a9",
+  "caption": "The site today - aerial imagery (Esri World Imagery)",
+  "fetched_at": "2026-09-07T19:24:40.139330+00:00",
+  "bytes": 68635
+ },
+ {
+  "project_id": "2019-012676PRJ",
+  "slug": "2019-012676prj",
+  "path": "media/2019-012676prj.jpg",
+  "source": "parcel_aerial",
+  "source_url": "https://www.arcgis.com/home/item.html?id=10df2279f9684e4a9f6a7f08febac2a9",
+  "caption": "The site today - aerial imagery (Esri World Imagery)",
+  "fetched_at": "2026-09-07T19:24:09.187350+00:00",
+  "bytes": 64842
+ },
+ {
+  "project_id": "2019-020818PRJ",
+  "slug": "2019-020818prj",
+  "path": "media/2019-020818prj.jpg",
+  "source": "parcel_aerial",
+  "source_url": "https://www.arcgis.com/home/item.html?id=10df2279f9684e4a9f6a7f08febac2a9",
+  "caption": "The site today - aerial imagery (Esri World Imagery)",
+  "fetched_at": "2026-09-07T19:23:56.704819+00:00",
+  "bytes": 73134
+ },
+ {
+  "project_id": "2019-022510PRJ",
+  "slug": "2019-022510prj",
+  "path": "media/2019-022510prj.jpg",
+  "source": "parcel_aerial",
+  "source_url": "https://www.arcgis.com/home/item.html?id=10df2279f9684e4a9f6a7f08febac2a9",
+  "caption": "The site today - aerial imagery (Esri World Imagery)",
+  "fetched_at": "2026-09-07T19:24:17.362379+00:00",
+  "bytes": 64521
+ },
+ {
+  "project_id": "2019-022850PRJ",
+  "slug": "2019-022850prj",
+  "path": "media/2019-022850prj.jpg",
+  "source": "parcel_aerial",
+  "source_url": "https://www.arcgis.com/home/item.html?id=10df2279f9684e4a9f6a7f08febac2a9",
+  "caption": "The site today \u2014 aerial imagery (Esri World Imagery)",
+  "fetched_at": "2026-09-07T06:40:09.227878+00:00",
+  "bytes": 60717
+ },
+ {
+  "project_id": "2020-003042PRJ",
+  "slug": "2020-003042prj",
+  "path": "media/2020-003042prj.jpg",
+  "source": "parcel_aerial",
+  "source_url": "https://www.arcgis.com/home/item.html?id=10df2279f9684e4a9f6a7f08febac2a9",
+  "caption": "The site today - aerial imagery (Esri World Imagery)",
+  "fetched_at": "2026-09-07T19:24:27.428200+00:00",
+  "bytes": 72303
+ },
+ {
+  "project_id": "2020-005253PRJ",
+  "slug": "2020-005253prj",
+  "path": "media/2020-005253prj.jpg",
+  "source": "parcel_aerial",
+  "source_url": "https://www.arcgis.com/home/item.html?id=10df2279f9684e4a9f6a7f08febac2a9",
+  "caption": "The site today - aerial imagery (Esri World Imagery)",
+  "fetched_at": "2026-09-07T19:23:13.786828+00:00",
+  "bytes": 65992
+ },
+ {
+  "project_id": "2020-006544PRJ",
+  "slug": "2020-006544prj",
+  "path": "media/2020-006544prj.jpg",
+  "source": "parcel_aerial",
+  "source_url": "https://www.arcgis.com/home/item.html?id=10df2279f9684e4a9f6a7f08febac2a9",
+  "caption": "The site today - aerial imagery (Esri World Imagery)",
+  "fetched_at": "2026-09-07T19:22:56.685365+00:00",
+  "bytes": 65410
+ },
+ {
+  "project_id": "2021-009951PRJ",
+  "slug": "2021-009951prj",
+  "path": "media/2021-009951prj.jpg",
+  "source": "parcel_aerial",
+  "source_url": "https://www.arcgis.com/home/item.html?id=10df2279f9684e4a9f6a7f08febac2a9",
+  "caption": "The site today - aerial imagery (Esri World Imagery)",
+  "fetched_at": "2026-09-07T19:22:38.234122+00:00",
+  "bytes": 63573
+ },
+ {
+  "project_id": "2022-008873PRJ",
+  "slug": "2022-008873prj",
+  "path": "media/2022-008873prj.jpg",
+  "source": "parcel_aerial",
+  "source_url": "https://www.arcgis.com/home/item.html?id=10df2279f9684e4a9f6a7f08febac2a9",
+  "caption": "The site today - aerial imagery (Esri World Imagery)",
+  "fetched_at": "2026-09-07T19:22:31.785481+00:00",
+  "bytes": 63962
+ },
+ {
+  "project_id": "2022-009171PRJ",
+  "slug": "2022-009171prj",
+  "path": "media/2022-009171prj.jpg",
+  "source": "parcel_aerial",
+  "source_url": "https://www.arcgis.com/home/item.html?id=10df2279f9684e4a9f6a7f08febac2a9",
+  "caption": "The site today - aerial imagery (Esri World Imagery)",
+  "fetched_at": "2026-09-07T19:20:28.610316+00:00",
+  "bytes": 67801
+ },
+ {
+  "project_id": "2022-012441PRJ",
+  "slug": "2022-012441prj",
+  "path": "media/2022-012441prj.jpg",
+  "source": "parcel_aerial",
+  "source_url": "https://www.arcgis.com/home/item.html?id=10df2279f9684e4a9f6a7f08febac2a9",
+  "caption": "The site today - aerial imagery (Esri World Imagery)",
+  "fetched_at": "2026-09-07T19:21:26.032021+00:00",
+  "bytes": 62445
+ },
+ {
+  "project_id": "2023-002612PRJ",
+  "slug": "2023-002612prj",
+  "path": "media/2023-002612prj.jpg",
+  "source": "parcel_aerial",
+  "source_url": "https://www.arcgis.com/home/item.html?id=10df2279f9684e4a9f6a7f08febac2a9",
+  "caption": "The site today - aerial imagery (Esri World Imagery)",
+  "fetched_at": "2026-09-07T19:23:02.392937+00:00",
+  "bytes": 64141
+ },
+ {
+  "project_id": "2023-003263PRJ",
+  "slug": "2023-003263prj",
+  "path": "media/2023-003263prj.jpg",
+  "source": "parcel_aerial",
+  "source_url": "https://www.arcgis.com/home/item.html?id=10df2279f9684e4a9f6a7f08febac2a9",
+  "caption": "The site today - aerial imagery (Esri World Imagery)",
+  "fetched_at": "2026-09-07T19:20:47.682068+00:00",
+  "bytes": 65023
+ },
+ {
+  "project_id": "2023-006512PRJ",
+  "slug": "2023-006512prj",
+  "path": "media/2023-006512prj.jpg",
+  "source": "parcel_aerial",
+  "source_url": "https://www.arcgis.com/home/item.html?id=10df2279f9684e4a9f6a7f08febac2a9",
+  "caption": "The site today - aerial imagery (Esri World Imagery)",
+  "fetched_at": "2026-09-07T19:23:43.428993+00:00",
+  "bytes": 68720
+ },
+ {
+  "project_id": "2023-009146PRJ",
+  "slug": "2023-009146prj",
+  "path": "media/2023-009146prj.jpg",
+  "source": "parcel_aerial",
+  "source_url": "https://www.arcgis.com/home/item.html?id=10df2279f9684e4a9f6a7f08febac2a9",
+  "caption": "The site today - aerial imagery (Esri World Imagery)",
+  "fetched_at": "2026-09-07T19:22:01.907146+00:00",
+  "bytes": 66604
+ },
+ {
+  "project_id": "2023-010914PRX",
+  "slug": "2023-010914prx",
+  "path": "media/2023-010914prx.jpg",
+  "source": "parcel_aerial",
+  "source_url": "https://www.arcgis.com/home/item.html?id=10df2279f9684e4a9f6a7f08febac2a9",
+  "caption": "The site today - aerial imagery (Esri World Imagery)",
+  "fetched_at": "2026-09-07T19:22:15.040884+00:00",
+  "bytes": 61957
+ },
+ {
+  "project_id": "2023-010956PRX",
+  "slug": "2023-010956prx",
+  "path": "media/2023-010956prx.jpg",
+  "source": "parcel_aerial",
+  "source_url": "https://www.arcgis.com/home/item.html?id=10df2279f9684e4a9f6a7f08febac2a9",
+  "caption": "The site today - aerial imagery (Esri World Imagery)",
+  "fetched_at": "2026-09-07T19:20:41.816340+00:00",
+  "bytes": 66811
+ },
+ {
+  "project_id": "2024-003742PRJ",
+  "slug": "2024-003742prj",
+  "path": "media/2024-003742prj.jpg",
+  "source": "parcel_aerial",
+  "source_url": "https://www.arcgis.com/home/item.html?id=10df2279f9684e4a9f6a7f08febac2a9",
+  "caption": "The site today - aerial imagery (Esri World Imagery)",
+  "fetched_at": "2026-09-07T19:21:45.696409+00:00",
+  "bytes": 63702
+ },
+ {
+  "project_id": "2024-004990PRJ",
+  "slug": "2024-004990prj",
+  "path": "media/2024-004990prj.jpg",
+  "source": "parcel_aerial",
+  "source_url": "https://www.arcgis.com/home/item.html?id=10df2279f9684e4a9f6a7f08febac2a9",
+  "caption": "The site today - aerial imagery (Esri World Imagery)",
+  "fetched_at": "2026-09-07T19:20:37.496318+00:00",
+  "bytes": 63953
+ },
+ {
+  "project_id": "2024-005784PRJ",
+  "slug": "2024-005784prj",
+  "path": "media/2024-005784prj.jpg",
+  "source": "parcel_aerial",
+  "source_url": "https://www.arcgis.com/home/item.html?id=10df2279f9684e4a9f6a7f08febac2a9",
+  "caption": "The site today \u2014 aerial imagery (Esri World Imagery)",
+  "fetched_at": "2026-09-07T06:40:00.206457+00:00",
+  "bytes": 60481
+ },
+ {
+  "project_id": "2024-010303PRJ",
+  "slug": "2024-010303prj",
+  "path": "media/2024-010303prj.jpg",
+  "source": "parcel_aerial",
+  "source_url": "https://www.arcgis.com/home/item.html?id=10df2279f9684e4a9f6a7f08febac2a9",
+  "caption": "The site today - aerial imagery (Esri World Imagery)",
+  "fetched_at": "2026-09-07T19:22:08.388765+00:00",
+  "bytes": 69095
+ },
+ {
+  "project_id": "2025-002075PRJ",
+  "slug": "2025-002075prj",
+  "path": "media/2025-002075prj.jpg",
+  "source": "parcel_aerial",
+  "source_url": "https://www.arcgis.com/home/item.html?id=10df2279f9684e4a9f6a7f08febac2a9",
+  "caption": "The site today - aerial imagery (Esri World Imagery)",
+  "fetched_at": "2026-09-07T19:24:34.428521+00:00",
+  "bytes": 71172
+ },
+ {
+  "project_id": "2025-002304PRJ",
+  "slug": "2025-002304prj",
+  "path": "media/2025-002304prj.jpg",
+  "source": "parcel_aerial",
+  "source_url": "https://www.arcgis.com/home/item.html?id=10df2279f9684e4a9f6a7f08febac2a9",
+  "caption": "The site today - aerial imagery (Esri World Imagery)",
+  "fetched_at": "2026-09-07T19:21:15.215484+00:00",
+  "bytes": 64081
+ },
+ {
+  "project_id": "2025-004242PRJ",
+  "slug": "2025-004242prj",
+  "path": "media/2025-004242prj.jpg",
+  "source": "parcel_aerial",
+  "source_url": "https://www.arcgis.com/home/item.html?id=10df2279f9684e4a9f6a7f08febac2a9",
+  "caption": "The site today - aerial imagery (Esri World Imagery)",
+  "fetched_at": "2026-09-07T19:21:33.792925+00:00",
+  "bytes": 67705
+ },
+ {
+  "project_id": "BL1939001",
+  "slug": "bl1939001",
+  "path": "media/bl1939001.jpg",
+  "source": "parcel_aerial",
+  "source_url": "https://www.arcgis.com/home/item.html?id=10df2279f9684e4a9f6a7f08febac2a9",
+  "caption": "The site today - aerial imagery (Esri World Imagery)",
+  "fetched_at": "2026-09-07T19:21:52.305332+00:00",
+  "bytes": 39048
+ },
+ {
+  "project_id": "BL3180190",
+  "slug": "bl3180190",
+  "path": "media/bl3180190.jpg",
+  "source": "parcel_aerial",
+  "source_url": "https://www.arcgis.com/home/item.html?id=10df2279f9684e4a9f6a7f08febac2a9",
+  "caption": "The site today - aerial imagery (Esri World Imagery)",
+  "fetched_at": "2026-09-07T19:21:18.423112+00:00",
+  "bytes": 41145
+ },
+ {
+  "project_id": "BL4052001",
+  "slug": "bl4052001",
+  "path": "media/bl4052001.jpg",
+  "source": "parcel_aerial",
+  "source_url": "https://www.arcgis.com/home/item.html?id=10df2279f9684e4a9f6a7f08febac2a9",
+  "caption": "The site today \u2014 aerial imagery (Esri World Imagery)",
+  "fetched_at": "2026-09-07T06:40:17.455642+00:00",
+  "bytes": 49296
+ },
+ {
+  "project_id": "BL4110012",
+  "slug": "bl4110012",
+  "path": "media/bl4110012.jpg",
+  "source": "parcel_aerial",
+  "source_url": "https://www.arcgis.com/home/item.html?id=10df2279f9684e4a9f6a7f08febac2a9",
+  "caption": "The site today \u2014 aerial imagery (Esri World Imagery)",
+  "fetched_at": "2026-09-07T06:40:26.376647+00:00",
+  "bytes": 52495
+ },
+ {
+  "project_id": "BL4591D144",
+  "slug": "bl4591d144",
+  "path": "media/bl4591d144.jpg",
+  "source": "parcel_aerial",
+  "source_url": "https://www.arcgis.com/home/item.html?id=10df2279f9684e4a9f6a7f08febac2a9",
+  "caption": "The site today - aerial imagery (Esri World Imagery)",
+  "fetched_at": "2026-09-07T19:25:30.050025+00:00",
+  "bytes": 60666
+ },
+ {
+  "project_id": "BL4591D146",
+  "slug": "bl4591d146",
+  "path": "media/bl4591d146.jpg",
+  "source": "parcel_aerial",
+  "source_url": "https://www.arcgis.com/home/item.html?id=10df2279f9684e4a9f6a7f08febac2a9",
+  "caption": "The site today - aerial imagery (Esri World Imagery)",
+  "fetched_at": "2026-09-07T19:24:44.481653+00:00",
+  "bytes": 57224
+ },
+ {
+  "project_id": "BL4591D147",
+  "slug": "bl4591d147",
+  "path": "media/bl4591d147.jpg",
+  "source": "parcel_aerial",
+  "source_url": "https://www.arcgis.com/home/item.html?id=10df2279f9684e4a9f6a7f08febac2a9",
+  "caption": "The site today - aerial imagery (Esri World Imagery)",
+  "fetched_at": "2026-09-07T19:25:39.075940+00:00",
+  "bytes": 56449
+ },
+ {
+  "project_id": "BL4591D148",
+  "slug": "bl4591d148",
+  "path": "media/bl4591d148.jpg",
+  "source": "parcel_aerial",
+  "source_url": "https://www.arcgis.com/home/item.html?id=10df2279f9684e4a9f6a7f08febac2a9",
+  "caption": "The site today - aerial imagery (Esri World Imagery)",
+  "fetched_at": "2026-09-07T19:23:28.276508+00:00",
+  "bytes": 54975
+ },
+ {
+  "project_id": "BL4591D149",
+  "slug": "bl4591d149",
+  "path": "media/bl4591d149.jpg",
+  "source": "parcel_aerial",
+  "source_url": "https://www.arcgis.com/home/item.html?id=10df2279f9684e4a9f6a7f08febac2a9",
+  "caption": "The site today - aerial imagery (Esri World Imagery)",
+  "fetched_at": "2026-09-07T19:24:58.411560+00:00",
+  "bytes": 55830
+ },
+ {
+  "project_id": "BL4591D150",
+  "slug": "bl4591d150",
+  "path": "media/bl4591d150.jpg",
+  "source": "parcel_aerial",
+  "source_url": "https://www.arcgis.com/home/item.html?id=10df2279f9684e4a9f6a7f08febac2a9",
+  "caption": "The site today - aerial imagery (Esri World Imagery)",
+  "fetched_at": "2026-09-07T19:25:34.432976+00:00",
+  "bytes": 57758
+ },
+ {
+  "project_id": "BL4591D151",
+  "slug": "bl4591d151",
+  "path": "media/bl4591d151.jpg",
+  "source": "parcel_aerial",
+  "source_url": "https://www.arcgis.com/home/item.html?id=10df2279f9684e4a9f6a7f08febac2a9",
+  "caption": "The site today - aerial imagery (Esri World Imagery)",
+  "fetched_at": "2026-09-07T19:25:10.760387+00:00",
+  "bytes": 55971
+ },
+ {
+  "project_id": "BL4591D152",
+  "slug": "bl4591d152",
+  "path": "media/bl4591d152.jpg",
+  "source": "parcel_aerial",
+  "source_url": "https://www.arcgis.com/home/item.html?id=10df2279f9684e4a9f6a7f08febac2a9",
+  "caption": "The site today - aerial imagery (Esri World Imagery)",
+  "fetched_at": "2026-09-07T19:25:07.530248+00:00",
+  "bytes": 54117
+ },
+ {
+  "project_id": "BL4591D153",
+  "slug": "bl4591d153",
+  "path": "media/bl4591d153.jpg",
+  "source": "parcel_aerial",
+  "source_url": "https://www.arcgis.com/home/item.html?id=10df2279f9684e4a9f6a7f08febac2a9",
+  "caption": "The site today - aerial imagery (Esri World Imagery)",
+  "fetched_at": "2026-09-07T19:23:17.932937+00:00",
+  "bytes": 53815
+ },
+ {
+  "project_id": "BL4591D154",
+  "slug": "bl4591d154",
+  "path": "media/bl4591d154.jpg",
+  "source": "parcel_aerial",
+  "source_url": "https://www.arcgis.com/home/item.html?id=10df2279f9684e4a9f6a7f08febac2a9",
+  "caption": "The site today - aerial imagery (Esri World Imagery)",
+  "fetched_at": "2026-09-07T19:23:49.672838+00:00",
+  "bytes": 56342
+ },
+ {
+  "project_id": "BL4591D155",
+  "slug": "bl4591d155",
+  "path": "media/bl4591d155.jpg",
+  "source": "parcel_aerial",
+  "source_url": "https://www.arcgis.com/home/item.html?id=10df2279f9684e4a9f6a7f08febac2a9",
+  "caption": "The site today - aerial imagery (Esri World Imagery)",
+  "fetched_at": "2026-09-07T19:24:54.962423+00:00",
+  "bytes": 58336
+ },
+ {
+  "project_id": "BL4591D156",
+  "slug": "bl4591d156",
+  "path": "media/bl4591d156.jpg",
+  "source": "parcel_aerial",
+  "source_url": "https://www.arcgis.com/home/item.html?id=10df2279f9684e4a9f6a7f08febac2a9",
+  "caption": "The site today - aerial imagery (Esri World Imagery)",
+  "fetched_at": "2026-09-07T19:23:06.359026+00:00",
+  "bytes": 57094
+ },
+ {
+  "project_id": "BL4591D157",
+  "slug": "bl4591d157",
+  "path": "media/bl4591d157.jpg",
+  "source": "parcel_aerial",
+  "source_url": "https://www.arcgis.com/home/item.html?id=10df2279f9684e4a9f6a7f08febac2a9",
+  "caption": "The site today - aerial imagery (Esri World Imagery)",
+  "fetched_at": "2026-09-07T19:23:24.882299+00:00",
+  "bytes": 55084
+ },
+ {
+  "project_id": "BL4591D158",
+  "slug": "bl4591d158",
+  "path": "media/bl4591d158.jpg",
+  "source": "parcel_aerial",
+  "source_url": "https://www.arcgis.com/home/item.html?id=10df2279f9684e4a9f6a7f08febac2a9",
+  "caption": "The site today - aerial imagery (Esri World Imagery)",
+  "fetched_at": "2026-09-07T19:24:20.595271+00:00",
+  "bytes": 54647
+ },
+ {
+  "project_id": "BL4591D159",
+  "slug": "bl4591d159",
+  "path": "media/bl4591d159.jpg",
+  "source": "parcel_aerial",
+  "source_url": "https://www.arcgis.com/home/item.html?id=10df2279f9684e4a9f6a7f08febac2a9",
+  "caption": "The site today - aerial imagery (Esri World Imagery)",
+  "fetched_at": "2026-09-07T19:25:20.885745+00:00",
+  "bytes": 53231
+ },
+ {
+  "project_id": "BL4591D160",
+  "slug": "bl4591d160",
+  "path": "media/bl4591d160.jpg",
+  "source": "parcel_aerial",
+  "source_url": "https://www.arcgis.com/home/item.html?id=10df2279f9684e4a9f6a7f08febac2a9",
+  "caption": "The site today - aerial imagery (Esri World Imagery)",
+  "fetched_at": "2026-09-07T19:23:38.485660+00:00",
+  "bytes": 55033
+ },
+ {
+  "project_id": "BL6310001",
+  "slug": "bl6310001",
+  "path": "media/bl6310001.jpg",
+  "source": "parcel_aerial",
+  "source_url": "https://www.arcgis.com/home/item.html?id=10df2279f9684e4a9f6a7f08febac2a9",
+  "caption": "The site today - aerial imagery (Esri World Imagery)",
+  "fetched_at": "2026-09-07T19:21:56.016222+00:00",
+  "bytes": 55839
+ },
+ {
+  "project_id": "BL6311001",
+  "slug": "bl6311001",
+  "path": "media/bl6311001.jpg",
+  "source": "parcel_aerial",
+  "source_url": "https://www.arcgis.com/home/item.html?id=10df2279f9684e4a9f6a7f08febac2a9",
+  "caption": "The site today - aerial imagery (Esri World Imagery)",
+  "fetched_at": "2026-09-07T19:22:18.642337+00:00",
+  "bytes": 65220
+ },
+ {
+  "project_id": "BL7308001",
+  "slug": "bl7308001",
+  "path": "media/bl7308001.jpg",
+  "source": "parcel_aerial",
+  "source_url": "https://www.arcgis.com/home/item.html?id=10df2279f9684e4a9f6a7f08febac2a9",
+  "caption": "The site today - aerial imagery (Esri World Imagery)",
+  "fetched_at": "2026-09-07T19:22:43.899479+00:00",
+  "bytes": 49067
+ },
+ {
+  "project_id": "BL7326001",
+  "slug": "bl7326001",
+  "path": "media/bl7326001.jpg",
+  "source": "parcel_aerial",
+  "source_url": "https://www.arcgis.com/home/item.html?id=10df2279f9684e4a9f6a7f08febac2a9",
+  "caption": "The site today \u2014 aerial imagery (Esri World Imagery)",
+  "fetched_at": "2026-09-07T06:40:12.565886+00:00",
+  "bytes": 54945
+ },
+ {
+  "project_id": "BL7330001",
+  "slug": "bl7330001",
+  "path": "media/bl7330001.jpg",
+  "source": "parcel_aerial",
+  "source_url": "https://www.arcgis.com/home/item.html?id=10df2279f9684e4a9f6a7f08febac2a9",
+  "caption": "The site today \u2014 aerial imagery (Esri World Imagery)",
+  "fetched_at": "2026-09-07T06:40:04.363487+00:00",
+  "bytes": 53730
+ },
+ {
+  "project_id": "BL7335001",
+  "slug": "bl7335001",
+  "path": "media/bl7335001.jpg",
+  "source": "parcel_aerial",
+  "source_url": "https://www.arcgis.com/home/item.html?id=10df2279f9684e4a9f6a7f08febac2a9",
+  "caption": "The site today \u2014 aerial imagery (Esri World Imagery)",
+  "fetched_at": "2026-09-07T06:40:22.786681+00:00",
+  "bytes": 56174
+ },
+ {
+  "project_id": "BL8711029B",
+  "slug": "bl8711029b",
+  "path": "media/bl8711029b.jpg",
+  "source": "parcel_aerial",
+  "source_url": "https://www.arcgis.com/home/item.html?id=10df2279f9684e4a9f6a7f08febac2a9",
+  "caption": "The site today - aerial imagery (Esri World Imagery)",
+  "fetched_at": "2026-09-07T19:20:56.542563+00:00",
+  "bytes": 59495
+ },
+ {
+  "project_id": "BL8901002",
+  "slug": "bl8901002",
+  "path": "media/bl8901002.jpg",
+  "source": "parcel_aerial",
+  "source_url": "https://www.arcgis.com/home/item.html?id=10df2279f9684e4a9f6a7f08febac2a9",
+  "caption": "The site today - aerial imagery (Esri World Imagery)",
+  "fetched_at": "2026-09-07T19:21:39.307642+00:00",
+  "bytes": 58726
+ },
+ {
+  "project_id": "BL8933003",
+  "slug": "bl8933003",
+  "path": "media/bl8933003.jpg",
+  "source": "parcel_aerial",
+  "source_url": "https://www.arcgis.com/home/item.html?id=10df2279f9684e4a9f6a7f08febac2a9",
+  "caption": "The site today - aerial imagery (Esri World Imagery)",
+  "fetched_at": "2026-09-07T19:21:08.019618+00:00",
+  "bytes": 38722
+ },
+ {
+  "project_id": "PERMIT-201912179800",
+  "slug": "permit-201912179800",
+  "path": "media/permit-201912179800.jpg",
+  "source": "parcel_aerial",
+  "source_url": "https://www.arcgis.com/home/item.html?id=10df2279f9684e4a9f6a7f08febac2a9",
+  "caption": "The site today - aerial imagery (Esri World Imagery)",
+  "fetched_at": "2026-09-07T19:20:22.890468+00:00",
+  "bytes": 61639
+ },
+ {
+  "project_id": "PERMIT-202207219033",
+  "slug": "permit-202207219033",
+  "path": "media/permit-202207219033.jpg",
+  "source": "parcel_aerial",
+  "source_url": "https://www.arcgis.com/home/item.html?id=10df2279f9684e4a9f6a7f08febac2a9",
+  "caption": "The site today - aerial imagery (Esri World Imagery)",
+  "fetched_at": "2026-09-07T19:24:03.603845+00:00",
+  "bytes": 67026
+ },
+ {
+  "project_id": "PERMIT-202209273243",
+  "slug": "permit-202209273243",
+  "path": "media/permit-202209273243.jpg",
+  "source": "parcel_aerial",
+  "source_url": "https://www.arcgis.com/home/item.html?id=10df2279f9684e4a9f6a7f08febac2a9",
+  "caption": "The site today - aerial imagery (Esri World Imagery)",
+  "fetched_at": "2026-09-07T19:23:34.323264+00:00",
+  "bytes": 65171
+ },
+ {
+  "project_id": "PERMIT-202512151804",
+  "slug": "permit-202512151804",
+  "path": "media/permit-202512151804.jpg",
+  "source": "parcel_aerial",
+  "source_url": "https://www.arcgis.com/home/item.html?id=10df2279f9684e4a9f6a7f08febac2a9",
+  "caption": "The site today - aerial imagery (Esri World Imagery)",
+  "fetched_at": "2026-09-07T19:20:32.982667+00:00",
+  "bytes": 63342
+ }
+]

@@ -1,0 +1,19 @@
+# Raw API pulls — regenerable, and kept out of context on purpose
+/data/raw/
+
+# Large basemap extract — fetched via scripts/get_basemap.py
+/site/basemap/*.pmtiles
+
+# Scrape working files
+/data/scrape_cache/
+
+# Local env / secrets
+.env
+
+# Python
+__pycache__/
+*.pyc
+
+# OS
+.DS_Store
+Thumbs.db
