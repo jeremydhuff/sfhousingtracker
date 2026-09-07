@@ -111,11 +111,6 @@ h1, h2, h3 { font-weight: 800; letter-spacing: -0.02em; margin: 0; }
   display: block;
 }
 .standings .sub { font-size: 11px; color: var(--faint); font-family: var(--mono); }
-.standings .done .yr {
-  font-size: 0.5em;
-  vertical-align: super;
-  color: var(--faint);
-}
 .standings .delta.up::before { content: "+"; }
 .standings .delta { color: var(--faint); }
 

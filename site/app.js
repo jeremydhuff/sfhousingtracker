@@ -62,7 +62,7 @@ function renderMasthead() {
       sub: `${s.under_construction_projects} projects` },
     { cls: "permit", n: num(s.permitted_units), lbl: "construction permit issued, not started",
       sub: `${s.permitted_projects} projects` },
-    { cls: "done", n: num(s.completed_this_year_units), yr: s.year,
+    { cls: "done", n: num(s.completed_this_year_units),
       lbl: `homes finished in ${s.year} so far`,
       sub: `${num(s.completed_prev_year_full)} in all of ${s.year - 1}` },
     { cls: "aff", n: (s.affordable_active_pct || 0) + "%",
@@ -71,7 +71,7 @@ function renderMasthead() {
   ];
   $("#standings").innerHTML = figs.map((f) => `
     <div class="fig ${f.cls}">
-      <span class="n">${f.n}${f.yr ? `<span class="yr">${String(f.yr).slice(2)}</span>` : ""}</span>
+      <span class="n">${f.n}</span>
       <span class="lbl">${f.lbl}</span>
       <span class="sub">${f.sub}</span>
     </div>`).join("");
