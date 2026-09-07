@@ -60,7 +60,7 @@ function renderMasthead() {
   const figs = [
     { cls: "built", n: num(s.under_construction_units), lbl: "homes under construction",
       sub: `${s.under_construction_projects} projects` },
-    { cls: "permit", n: num(s.permitted_units), lbl: "homes permitted, not yet started",
+    { cls: "permit", n: num(s.permitted_units), lbl: "construction permit issued, not started",
       sub: `${s.permitted_projects} projects` },
     { cls: "done", n: num(s.completed_this_year_units), yr: s.year,
       lbl: `homes finished in ${s.year} so far`,
