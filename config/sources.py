@@ -11,7 +11,12 @@ DOMAIN = "data.sfgov.org"
 
 # --- "Real progress" definition -------------------------------------------------
 # Which pipeline statuses count as "actually being built". Order = display order.
-CONSTRUCTION_STATUSES = ["Construction", "BP Issued", "BP Approved"]
+# Only statuses where a construction permit has actually been ISSUED:
+#   "Construction" - permit issued and building underway
+#   "BP Issued"    - construction permit issued, work not yet started
+# "BP Approved" (Planning signed off but DBI hasn't issued the permit) and
+# "BP Filed" (permit only applied for) are deliberately excluded.
+CONSTRUCTION_STATUSES = ["Construction", "BP Issued"]
 # Flip on to also include projects that have only *applied* for a building permit.
 INCLUDE_BP_FILED = False
 
@@ -85,9 +90,8 @@ ALL_SOURCES = [PIPELINE, PERMITS, COMPLETIONS, COMPLETION_CERTS]
 # The site shows exactly two categories. Pipeline statuses and DBI permits map in.
 STAGE_OF_STATUS = {
     "Construction": "under_construction",
-    "BP Issued": "permitted",
-    "BP Approved": "permitted",
-    "BP Filed": "permitted",
+    "BP Issued": "permitted",       # construction permit issued, not yet started
+    "BP Filed": "permitted",        # only reached if INCLUDE_BP_FILED is set
 }
 STAGE_LABEL = {"under_construction": "under construction", "permitted": "permitted"}
 

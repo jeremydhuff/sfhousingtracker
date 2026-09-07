@@ -1,7 +1,7 @@
 # SF Housing Construction Tracker
 
 A small, locally-run site that tracks housing **actually getting built** in San Francisco:
-homes under construction, homes with a building permit issued or approved, and homes
+homes under construction, homes with an issued building permit, and homes
 **completed so far this year** (the counter rolls over automatically on January 1).
 
 All data comes from the City & County of San Francisco open data portal
@@ -40,9 +40,11 @@ See **CLAUDE.md** for the update runbook and common tweaks, and
 Two stages only:
 
 - **Under construction** — Planning Department Development Pipeline `current_status = Construction`.
-- **Permitted** — pipeline status `BP Issued` / `BP Approved`, plus new-construction permits
-  the Dept. of Building Inspection issued in the last 24 months that the quarterly pipeline
-  snapshot hasn't picked up yet (deduped against the pipeline by block/lot).
+- **Permitted** — pipeline status `BP Issued` (construction permit issued, work not started),
+  plus new-construction permits the Dept. of Building Inspection issued in the last 24 months
+  that the quarterly pipeline snapshot hasn't picked up yet (deduped against the pipeline by
+  block/lot). Projects that are only *approved* (permit not yet issued) or *applied for* are
+  excluded.
 - **Completed this year** — net units from certificates of occupancy (Housing Production
   dataset). Runs low early in the year because the city backfills it for months.
 - **"Adds" vs "Replaces"** — derived from the project's recorded demolition and existing-use

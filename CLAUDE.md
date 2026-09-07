@@ -1,7 +1,7 @@
 # SF Housing Construction Tracker — update runbook
 
-A local, occasionally-updated site tracking housing that is **under construction** or has a
-**building permit issued/approved** in San Francisco, plus **homes completed this year** (rolls
+A local, occasionally-updated site tracking housing that is **under construction** or has an
+**issued building permit** in San Francisco, plus **homes completed this year** (rolls
 over automatically on Jan 1). Data from the DataSF open-data portal. No API key required.
 
 ## The one command
