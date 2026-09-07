@@ -20,8 +20,11 @@ python scripts/serve.py       # http://localhost:8000   (or: preview "site" in t
   backfills certificates of occupancy for a year+ (2025 ended at 3,034 the same way), plus
   ~-100 net from HOPE SF phased demolition (Sunnydale, 700 Missouri St).
 - 558 projects, 5,085 homes total
-- Affordable share where known: **60.3%** — SF's actually-permitted-and-building housing
-  right now is dominated by 100%-affordable projects; market-rate has stalled. Real, not a bug.
+- BMR (below-market-rate) share where known: **59.6%** — verified. SF's
+  actually-permitted-and-building housing right now is dominated by 100%-BMR projects
+  (300 De Haro 425u, 758 Pacific 175u, 1633 Valencia, 2970 16th, Balboa Reservoir...);
+  market-rate has stalled. Both stages independently ~60%. Real, not a bug.
+  (Term is "BMR" everywhere user-facing now, per your call; data keys stay `affordable_*`.)
 
 Two corrections applied this session:
 - **Issued permits only.** `CONSTRUCTION_STATUSES` dropped `"BP Approved"` — a project counts

@@ -500,11 +500,11 @@ def write_digest(summary: dict, projects: list[dict], reentries: list[dict] | No
         f"in {summary['permitted_projects']} projects{delta('permitted_units')} "
         f"({summary['permitted_from_permits']} from recent DBI permits)",
         f"- Completed in {summary['year']} so far: **{summary['completed_this_year_units']:,} homes** "
-        f"({summary['completed_this_year_affordable']:,} affordable) "
+        f"({summary['completed_this_year_affordable']:,} BMR) "
         f"in {summary['completed_this_year_projects']} projects{delta('completed_this_year_units')}",
         f"  - {summary['year'] - 1} full year: {summary['completed_prev_year_full']:,} "
         f"(city backfills completions for months, so {summary['year']} runs low)",
-        f"- Affordable share where known: {summary['affordable_active_pct']}%",
+        f"- BMR (below-market-rate) share where known: {summary['affordable_active_pct']}%",
         f"- Project images on file: {covered}/{len(projects)} "
         f"({round(100 * covered / len(projects)) if projects else 0}%)",
         "",

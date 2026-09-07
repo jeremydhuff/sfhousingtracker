@@ -66,7 +66,7 @@ function renderMasthead() {
       lbl: `homes finished in ${s.year} so far`,
       sub: `${num(s.completed_prev_year_full)} in all of ${s.year - 1}` },
     { cls: "aff", n: (s.affordable_active_pct || 0) + "%",
-      lbl: "affordable, where the count is known",
+      lbl: "BMR, where the count is known",
       sub: `${num(s.affordable_active_units)} homes` },
   ];
   $("#standings").innerHTML = figs.map((f) => `
@@ -245,7 +245,7 @@ function chartStage() {
     s.append(tag("text", { x: pl + bw(d.units) + 6, y: yy + bh / 2 + 4, fill: "var(--ink)" },
       num(d.units)));
     s.append(tag("text", { x: pl + 2, y: yy - 5 },
-      `${d.label}${d.aff ? `  ·  ${num(d.aff)} affordable` : ""}`));
+      `${d.label}${d.aff ? `  ·  ${num(d.aff)} BMR` : ""}`));
   });
   box.append(s);
 }
@@ -284,7 +284,7 @@ const COLS = [
   { key: "name", label: "project", get: (p) => p.name.toLowerCase() },
   { key: "neighborhood", label: "neighborhood", get: (p) => p.neighborhood },
   { key: "net_units", label: "homes", num: true, get: (p) => p.net_units },
-  { key: "affordable_units", label: "afford.", num: true, get: (p) => p.affordable_units },
+  { key: "affordable_units", label: "BMR", num: true, get: (p) => p.affordable_units },
   { key: "change", label: "site change", get: (p) => p.change },
   { key: "status_date", label: "since", get: (p) => p.status_date || "" },
 ];
@@ -451,6 +451,8 @@ function renderFooter() {
     <b>Adds vs. replaces</b> is read from the city's recorded demolition and existing-use fields:
     "adds" when nothing is torn down (ADUs, additions), "replaces" for teardowns and new
     construction on vacant or parking lots.
+    <b>BMR</b> = below-market-rate (deed-restricted affordable) homes, from the pipeline's
+    affordable-unit count; unknown for the raw DBI permits, shown as "?".
     Imagery: renderings and construction photos from Wikimedia Commons and SF Planning where
     available, otherwise a site aerial from Esri (${withImg}/${S.projects.length}, ${cov}%).</div>
     <div class="method"><b>How to read the counts.</b> These are a <i>cumulative stock</i> &mdash;
