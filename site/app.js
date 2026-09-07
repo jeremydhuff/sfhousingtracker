@@ -174,15 +174,13 @@ function chartCompletions() {
   const box = $("#chart-completions");
   $("#cc-hd").textContent = "Homes completed per year";
   $("#cc-note").textContent =
-    `Net new homes receiving a certificate of occupancy, by year. The ${yr} bar is far from ` +
-    `final — the city keeps entering these records for a year or more after a building opens, ` +
-    `so it will keep rising. It also nets out HOPE SF public-housing rebuilds (Sunnydale, ` +
-    `Potrero) that demolish before their replacements finish.`;
+    `Net new homes receiving a certificate of occupancy. The ${yr} bar keeps rising for a ` +
+    `year+ as the city files the paperwork, and nets out HOPE SF rebuilds that demolish first.`;
   if (!years.length) { box.append(note("no completion data")); return; }
 
   const vals = years.map((y) => annual[y]);
   const max = Math.ceil(Math.max(100, ...vals) / 1000) * 1000;
-  const W = 640, H = 250, pl = 46, pr = 14, pt = 18, pb = 28;
+  const W = 640, H = 244, pl = 48, pr = 18, pt = 24, pb = 28;
   const bx = (i) => pl + (i + 0.5) * (W - pl - pr) / years.length;
   const bw = Math.min(48, (W - pl - pr) / years.length * 0.6);
   const y = (v) => H - pb - (Math.max(v, 0) / max) * (H - pt - pb);
@@ -216,7 +214,7 @@ function chartCompletions() {
   });
   box.append(s);
 
-  const recent = S.completions.slice(0, 4)
+  const recent = S.completions.slice(0, 3)
     .map((c) => `${c.address} (${c.net_units})`).join("  ·  ");
   if (recent) box.append(note("latest certificates: " + recent));
 }
@@ -232,20 +230,20 @@ function chartStage() {
       units: ps.reduce((a, p) => a + p.net_units, 0),
       aff: ps.reduce((a, p) => a + (p.affordable_known ? p.affordable_units : 0), 0) };
   });
-  const W = 420, H = 150, pl = 4, pr = 56, pt = 8, gap = 30;
-  const bh = (H - pt - data.length * gap) / data.length;
+  // wide viewBox so it scales ~1:1 with the column and the type stays ~10px
+  const W = 640, H = 168, pl = 2, pr = 74, gap = 52, bh = 30;
   const max = Math.max(1, ...data.map((d) => d.units));
-  const bw = (v) => (v / max) * (W - pl - pr);
+  const bw = (v) => Math.max(1, (v / max) * (W - pl - pr));
   const s = svgEl(W, H);
   data.forEach((d, i) => {
-    const yy = pt + i * (bh + gap);
+    const yy = 22 + i * (bh + gap);
+    s.append(tag("text", { x: pl, y: yy - 8 },
+      `${d.label}${d.aff ? `  ·  ${num(d.aff)} BMR` : ""}`));
     s.append(tag("rect", { class: d.cls, x: pl, y: yy, width: bw(d.units), height: bh }));
     if (d.aff > 0)
-      s.append(tag("rect", { class: "bar-aff", x: pl, y: yy + bh - 5, width: bw(d.aff), height: 5 }));
-    s.append(tag("text", { x: pl + bw(d.units) + 6, y: yy + bh / 2 + 4, fill: "var(--ink)" },
+      s.append(tag("rect", { class: "bar-aff", x: pl, y: yy + bh - 4, width: bw(d.aff), height: 4 }));
+    s.append(tag("text", { x: pl + bw(d.units) + 8, y: yy + bh / 2 + 3.5, fill: "var(--ink)" },
       num(d.units)));
-    s.append(tag("text", { x: pl + 2, y: yy - 5 },
-      `${d.label}${d.aff ? `  ·  ${num(d.aff)} BMR` : ""}`));
   });
   box.append(s);
 }
@@ -347,16 +345,21 @@ function renderTable() {
       th.dataset.k === S.sort.key ? (S.sort.dir < 0 ? " ▼" : " ▲") : "";
   });
 
-  $("#idx-body").innerHTML = rows.map((p) => `
+  $("#idx-body").innerHTML = rows.map((p) => {
+    const a = (p.address || "").toLowerCase(), n = (p.name || "").toLowerCase();
+    const subAddr = p.address && a !== n && !n.startsWith(a)
+      ? `<br><span class="sub">${esc(p.address)}</span>` : "";
+    return `
     <tr data-id="${esc(p.id)}" class="${p.stage === "under_construction" ? "st-built" : "st-permit"}">
       <td class="glyph" title="${esc(p.status || "")}"></td>
-      <td class="addr">${esc(p.name)}<br><span style="color:var(--faint)">${esc(p.address)}</span></td>
+      <td class="addr">${esc(p.name)}${subAddr}</td>
       <td>${esc(p.neighborhood)}</td>
       <td class="num">${num(p.net_units)}</td>
       <td class="num">${p.affordable_known ? (p.affordable_units ? num(p.affordable_units) : "0") : "?"}</td>
       <td class="replaces">${esc(p.change)}</td>
       <td>${esc(p.status_date || "·")}</td>
-    </tr>`).join("");
+    </tr>`;
+  }).join("");
   const byId = new Map(S.projects.map((p) => [p.id, p]));
   $$("#idx-body tr").forEach((tr) => {
     const p = byId.get(tr.dataset.id);

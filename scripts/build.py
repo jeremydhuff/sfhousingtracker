@@ -75,7 +75,12 @@ def _fix_caps(s: str) -> str:
 
 def street_address(nameaddr: str) -> str:
     """Best-effort street address for map/scrape lookups."""
-    s = (nameaddr or "").split(" - ")[0].split("/")[0].split("&")[0].strip()
+    raw = (nameaddr or "").split(" - ")[0].strip()
+    s = raw.split("/")[0].split("&")[0].strip()
+    if re.fullmatch(r"\d+", s):
+        # the split ate the street name ("758 & 772 Pacific Ave" -> "758"):
+        # keep the first number and the shared street name.
+        s = re.sub(r"^(\d[\d-]*)\s*[&/,]\s*\d[\d-]*\s+", r"\1 ", raw)
     s = re.sub(r"\s+", " ", s)
     return _strip_unit(_fix_caps(s))
 
