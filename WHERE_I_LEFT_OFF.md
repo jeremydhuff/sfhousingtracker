@@ -12,19 +12,25 @@ python scripts/update.py      # fetch + build + scrape images + snapshot
 python scripts/serve.py       # http://localhost:8000   (or: preview "site" in the app)
 ```
 
-## Current numbers (2026-09-07, after de-dup)
+## Current numbers (2026-09-07, issued-permits-only + de-dup)
 
 - 3,295 homes under construction / 432 projects
-- 4,197 homes permitted / 214 projects (15 from recent DBI permits)
+- 1,790 homes permitted / 126 projects (16 from recent DBI permits)
 - 381 homes completed in 2026 so far — **reporting lag**, not the real pace: the city
-  backfills certificates of occupancy for months (2025 ended at 3,034 the same way), plus
+  backfills certificates of occupancy for a year+ (2025 ended at 3,034 the same way), plus
   ~-100 net from HOPE SF phased demolition (Sunnydale, 700 Missouri St).
-- 646 projects, 7,492 homes total
-- Affordable share where known: 41.3%
+- 558 projects, 5,085 homes total
+- Affordable share where known: **60.3%** — SF's actually-permitted-and-building housing
+  right now is dominated by 100%-affordable projects; market-rate has stalled. Real, not a bug.
 
-De-dup removed 208 double-counted homes vs the first run: 175 from a DBI permit
-(758 & 772 Pacific Ave) that duplicated a pipeline project across two parcels, and 33
-from 22 pipeline rows that were the same small site entered under an old + a new case.
+Two corrections applied this session:
+- **Issued permits only.** `CONSTRUCTION_STATUSES` dropped `"BP Approved"` — a project counts
+  as "permitted" only once a construction permit is actually issued (`BP Issued`), not just
+  Planning-approved. Cut permitted from 4,197 -> 1,790 homes; removed stale entitlements like
+  400 2nd St (case 2012.1384).
+- **De-dup** removed 208 double-counted homes: 175 from a DBI permit (758 & 772 Pacific Ave)
+  that duplicated a pipeline project across two parcels, and 33 from ~20 pipeline rows that
+  were the same small site entered under an old + a new case.
 
 ## Done night 2
 

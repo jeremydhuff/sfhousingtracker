@@ -4,7 +4,7 @@
 - Permitted (not yet started): **1,790 homes** in 126 projects (16 from recent DBI permits)
 - Completed in 2026 so far: **381 homes** (283 affordable) in 156 projects
   - 2025 full year: 3,034 (city backfills completions for months, so 2026 runs low)
-- Affordable share where known: 60.3%
+- Affordable share where known: 59.6%
 - Project images on file: 54/558 (10%)
 
 ## Biggest active projects

@@ -189,7 +189,9 @@ def build_projects(media: dict) -> list[dict]:
             "status": r.get("current_status"),
             "status_date": (r.get("current_status_date") or "")[:10] or None,
             "net_units": units,
-            "affordable_units": iint(r.get("pipeline_affordable_units")),
+            # pipeline_affordable_units is a gross count; a few 100%-affordable projects
+            # that replace existing units report more affordable than *net* new. Cap it.
+            "affordable_units": min(iint(r.get("pipeline_affordable_units")), units),
             "affordable_known": True,
             "demo_units": abs(iint(r.get("demo_units"))),
             "change": derive_change(
