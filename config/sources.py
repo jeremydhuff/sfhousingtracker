@@ -118,6 +118,11 @@ UNIT_OVERRIDES = {
     # 1580 Beach St: net_pipeline_units=9, but case 2025-000742PRJ was revised to
     # "add a total of three ADU units ... not six as previously proposed".
     "2025-000742PRJ": 3,
+    # 750 Golden Gate Ave "Phase 1" (educator housing): net_pipeline_units=171 is
+    # the full 2-phase total. Phase 1 - the row that's actually under construction
+    # - is 75 units (MidPen property profile). 75 here + 850 Turk St's 92 = the
+    # 167 affordable units the June 2025 joint groundbreaking announced.
+    "2023-010956PRX": 75,
 }
 
 # DBI's "analysis neighborhood" names vs the pipeline's nhood41 names.

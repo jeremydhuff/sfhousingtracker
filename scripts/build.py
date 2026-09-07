@@ -288,7 +288,7 @@ def _collapse_reentries(records: list[dict]) -> tuple[list[dict], list[dict]]:
 
 
 def build_permit_projects(existing_blocklots: set[str], existing_addr_keys: set[str],
-                          media: dict) -> list[dict]:
+                          media: dict, existing_block_units: set[str] | None = None) -> list[dict]:
     """DBI permits that the quarterly pipeline snapshot hasn't captured.
 
     Two kinds:
@@ -297,10 +297,16 @@ def build_permit_projects(existing_blocklots: set[str], existing_addr_keys: set[
         piles for new construction)                        -> stage "under_construction"
 
     A permit can span several parcels; if *any* of them is already a pipeline
-    project (by block/lot or address) the whole permit is dropped. If a site has
-    both a groundwork and a new-construction permit in our pull, the groundwork
-    one wins (it's the "digging now" signal).
+    project (by block/lot or address) the whole permit is dropped. A groundwork
+    permit is also dropped when its parcel's assessor *block* carries a pipeline
+    project with the same unit count - big master developments (Balboa Reservoir)
+    file each building's site-work permit under its own street address / sub-parcel
+    that never matches the pipeline row's block/lot or address (e.g. tower crane
+    permit "105 Wisteria Ln" 3180/201 for the 159-unit pipeline building at
+    "11 Frida Kahlo Wy" 3180190). If a site has both a groundwork and a
+    new-construction permit in our pull, the groundwork one wins.
     """
+    existing_block_units = existing_block_units or set()
     by_permit: dict[str, list[dict]] = defaultdict(list)
     for r in load("permits"):
         if num(r.get("proposed_units")) < 1:
@@ -320,6 +326,11 @@ def build_permit_projects(existing_blocklots: set[str], existing_addr_keys: set[
         if (blks & existing_blocklots) or (addrs & existing_addr_keys):
             continue  # same site as a pipeline project
         is_gw = {str(r.get("permit_type") or "").strip() for r in group} <= {"3"}
+        units = int(round(max(num(r.get("proposed_units")) for r in group)))
+        block_units = {f"{(r.get('block') or '').strip().upper()}:{units}"
+                       for r in group if (r.get("block") or "").strip()}
+        if is_gw and (block_units & existing_block_units):
+            continue  # same building as a pipeline project, filed on a sub-parcel
         groups.append({"pnum": pnum, "group": group, "blks": blks, "gw": is_gw})
 
     gw_blocks = set().union(*(g["blks"] for g in groups if g["gw"])) if groups else set()
@@ -616,7 +627,12 @@ def main() -> None:
     blocklots = {p["blocklot"] for p in pipeline if p["blocklot"]}
     addr_keys = {_addr_key(p["address"]) for p in pipeline}
     addr_keys.discard("")
-    permit_projects = build_permit_projects(blocklots, addr_keys, media)
+    block_units = set()
+    for p in pipeline:
+        m = re.match(r"(\d{4}[A-Z]?)", p["blocklot"] or "")
+        if m and p["net_units"]:
+            block_units.add(f"{m.group(1)}:{p['net_units']}")
+    permit_projects = build_permit_projects(blocklots, addr_keys, media, block_units)
     projects = pipeline + permit_projects
     projects.sort(key=lambda x: -x["net_units"])
     if reentries:
