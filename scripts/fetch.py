@@ -44,13 +44,25 @@ def build_where(src: dict) -> str | None:
 
     if name == "permits":
         cutoff = (today - dt.timedelta(days=30 * S.PERMIT_LOOKBACK_MONTHS)).isoformat()
-        return (
-            "permit_type in ('1', '2') "               # new construction only
+        new_construction = (
+            "(permit_type in ('1', '2') "              # new construction only
             "and status in ('issued', 'reinstated') "
             "and proposed_units IS NOT NULL "
-            "and (proposed_units::number) >= 1 "        # must add homes
-            f"and issued_date > '{cutoff}T00:00:00'"
+            "and (proposed_units::number) >= 1 "       # must add homes
+            f"and issued_date > '{cutoff}T00:00:00')"
         )
+        gw_cutoff = (today - dt.timedelta(days=30 * S.GROUNDWORK_LOOKBACK_MONTHS)).isoformat()
+        gw_kw = " or ".join(
+            f"upper(description) like '%{p.upper()}%'" for p in S.GROUNDWORK_PHRASES
+        )
+        groundwork = (
+            "(permit_type = '3' "
+            "and status in ('issued', 'reinstated') "
+            f"and (proposed_units::number) >= {S.GROUNDWORK_MIN_UNITS} "
+            f"and issued_date > '{gw_cutoff}T00:00:00' "
+            f"and ({gw_kw}))"
+        )
+        return f"{new_construction} or {groundwork}"
 
     if name == "completions":
         start = _jan1(today.year - src.get("years_back", 6))

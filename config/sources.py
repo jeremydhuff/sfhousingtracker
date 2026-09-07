@@ -23,6 +23,22 @@ INCLUDE_BP_FILED = False
 # How far back the "recently issued permits" freshness layer looks.
 PERMIT_LOOKBACK_MONTHS = 24
 
+# --- "Breaking ground now" signal ---------------------------------------------
+# A big project pulls its type-1 new-construction permit years before it starts,
+# so by the time it's actually under construction that permit is outside the
+# 24-month window above and the quarterly pipeline may not list it yet
+# (e.g. 2918 Mission St: entitled 2018, type-1 permit 2018, groundwork 2026).
+# DBI *groundwork* permits - tower crane, shoring, excavation, soldier piles for
+# new construction - are the filing that actually tracks "digging now". We pull
+# type-3 permits whose description matches these phrases, carry a unit count, and
+# were issued recently, and file them as UNDER CONSTRUCTION.
+GROUNDWORK_LOOKBACK_MONTHS = 24
+GROUNDWORK_MIN_UNITS = 10
+GROUNDWORK_PHRASES = [
+    "shoring for new", "shoring and excavation", "excavation for new",
+    "foundation for new", "tower crane", "soldier pile", "soldier beam",
+]
+
 # --- Datasets -----------------------------------------------------------------
 
 PIPELINE = {

@@ -49,7 +49,12 @@ python scripts/serve.py        # http://localhost:8000
 ## Data sources (resource IDs)
 
 - `6jgi-cpb4` — SF Development Pipeline (quarterly): status, unit counts, existing use.
-- `i98e-djp9` — Building Permits (nightly): recently issued new-construction permits.
+- `i98e-djp9` — Building Permits (nightly): new-construction permits (type 1/2) from the last
+  24 months -> "permitted"; plus type-3 *site-work* permits (shoring/excavation/tower crane
+  for new construction, `GROUNDWORK_PHRASES` in `config/sources.py`) -> "under construction".
+  The site-work signal exists because a big project pulls its new-construction permit years
+  before it breaks ground, so that permit is outside the 24-month window by the time it
+  matters (e.g. 2918 Mission St: entitled + permitted 2018, groundwork 2026).
 - `xdht-4php` — Housing Production 2005-present: dated completions → "completed this year".
 - `j67f-aayr` — Dwelling Unit Completion Counts (TCO/CofO cross-check, currently unused downstream).
 - Affordable Housing Pipeline: configured but the endpoint 404s right now, so it's skipped.

@@ -250,14 +250,17 @@ def _collapse_reentries(records: list[dict]) -> tuple[list[dict], list[dict]]:
 
 def build_permit_projects(existing_blocklots: set[str], existing_addr_keys: set[str],
                           media: dict) -> list[dict]:
-    """DBI new-construction permits, folded into the 'permitted' stage.
+    """DBI permits that the quarterly pipeline snapshot hasn't captured.
 
-    These fill the gap between quarterly pipeline snapshots. They carry no
-    affordable count and no demo count, so `change` uses new_building=True.
+    Two kinds:
+      * type 1/2 new-construction permits issued recently  -> stage "permitted"
+      * type 3 groundwork permits (shoring / excavation / tower crane / soldier
+        piles for new construction)                        -> stage "under_construction"
 
-    A permit can span several parcels/addresses; if *any* of them is already a
-    pipeline project (by block/lot or by address) the whole permit is a
-    duplicate and dropped.
+    A permit can span several parcels; if *any* of them is already a pipeline
+    project (by block/lot or address) the whole permit is dropped. If a site has
+    both a groundwork and a new-construction permit in our pull, the groundwork
+    one wins (it's the "digging now" signal).
     """
     by_permit: dict[str, list[dict]] = defaultdict(list)
     for r in load("permits"):
@@ -267,55 +270,68 @@ def build_permit_projects(existing_blocklots: set[str], existing_addr_keys: set[
         if pnum:
             by_permit[pnum].append(r)
 
-    out: list[dict] = []
+    groups = []
     for pnum, group in by_permit.items():
         blks = {norm_blocklot((r.get("block") or "") + (r.get("lot") or "")) for r in group}
+        blks.discard("")
         addrs = {
             _addr_key(" ".join(p for p in [r.get("street_number"), r.get("street_name")] if p))
             for r in group
         }
         if (blks & existing_blocklots) or (addrs & existing_addr_keys):
             continue  # same site as a pipeline project
+        is_gw = {str(r.get("permit_type") or "").strip() for r in group} <= {"3"}
+        groups.append({"pnum": pnum, "group": group, "blks": blks, "gw": is_gw})
 
+    gw_blocks = set().union(*(g["blks"] for g in groups if g["gw"])) if groups else set()
+
+    out: list[dict] = []
+    seen_blocks: set[str] = set()
+    for g in sorted(groups, key=lambda x: not x["gw"]):  # groundwork first
+        if not g["gw"] and (g["blks"] & gw_blocks):
+            continue  # a groundwork permit already covers this parcel
+        if g["blks"] & seen_blocks:
+            continue
+        seen_blocks |= g["blks"]
+
+        group, pnum, gw = g["group"], g["pnum"], g["gw"]
         r = next((x for x in group
                   if str(x.get("primary_address_flag", "")).lower() in ("true", "1", "y")),
                  group[0])
-        proposed = num(r.get("proposed_units"))
+        proposed = int(round(num(r.get("proposed_units"))))
         blk = norm_blocklot((r.get("block") or "") + (r.get("lot") or ""))
-
         loc = r.get("location") or {}
         coords = (loc.get("coordinates") if isinstance(loc, dict) else None) or [None, None]
         addr = _fix_caps(" ".join(
             p for p in [r.get("street_number"), r.get("street_name"), r.get("street_suffix")] if p
         ).strip())
-        pid = f"PERMIT-{pnum}"
         is_adu = str(r.get("adu", "")).lower() in ("true", "1", "y")
         rec = {
-            "id": pid,
-            "slug": slugify(pid),
+            "id": f"PERMIT-{pnum}",
+            "slug": slugify(f"PERMIT-{pnum}"),
             "name": addr,
             "address": addr,
             "lat": coords[1],
             "lon": coords[0],
             "neighborhood": norm_nb(r.get("neighborhoods_analysis_boundaries")),
-            "stage": "permitted",
-            "status": "Permit issued (DBI)",
+            "stage": "under_construction" if gw else "permitted",
+            "status": "Site work permit (DBI)" if gw else "Permit issued (DBI)",
             "status_date": (r.get("issued_date") or "")[:10] or None,
-            "net_units": int(round(proposed)),
+            "net_units": proposed,
             "affordable_units": 0,
             "affordable_known": False,
             "demo_units": 0,
             "change": ("Adds an ADU" if is_adu else derive_change(
                 r.get("existing_units"), 0, {},
                 r.get("existing_use"), r.get("description"),
-                net=int(round(proposed)), new_building=True,
+                net=proposed, new_building=True,
             )),
             "zoning": None,
             "blocklot": blk,
             "source": "permit",
             "permit_number": pnum,
             "pim_url": pim_url(addr, blk),
-            "media": media.get(pid),
+            "media": media.get(f"PERMIT-{pnum}"),
         }
         out.append(rec)
     return out
@@ -416,6 +432,7 @@ def build_summary(projects, completions_year, monthly) -> dict:
         "year": YEAR,
         "under_construction_units": uc_units,
         "under_construction_projects": len(uc),
+        "under_construction_from_permits": sum(1 for p in uc if p["source"] == "permit"),
         "permitted_units": permit_units,
         "permitted_projects": len(permitted),
         "permitted_from_permits": sum(1 for p in permitted if p["source"] == "permit"),
@@ -500,7 +517,8 @@ def write_digest(summary: dict, projects: list[dict], reentries: list[dict] | No
         f"# SF housing tracker - digest ({summary['generated_at'][:10]})",
         "",
         f"- Under construction: **{summary['under_construction_units']:,} homes** "
-        f"in {summary['under_construction_projects']} projects{delta('under_construction_units')}",
+        f"in {summary['under_construction_projects']} projects{delta('under_construction_units')} "
+        f"({summary.get('under_construction_from_permits', 0)} from DBI site-work permits)",
         f"- Permitted (not yet started): **{summary['permitted_units']:,} homes** "
         f"in {summary['permitted_projects']} projects{delta('permitted_units')} "
         f"({summary['permitted_from_permits']} from recent DBI permits)",

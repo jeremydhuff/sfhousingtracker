@@ -12,10 +12,10 @@ python scripts/update.py      # fetch + build + scrape images + snapshot
 python scripts/serve.py       # http://localhost:8000   (or: preview "site" in the app)
 ```
 
-## Current numbers (2026-09-07, issued-permits-only + de-dup)
+## Current numbers (2026-09-07)
 
-- 3,295 homes under construction / 432 projects
-- 1,790 homes permitted / 126 projects (16 from recent DBI permits)
+- 3,589 homes under construction / 436 projects (4 from DBI site-work permits)
+- 1,790 homes permitted / 126 projects (16 from recent DBI new-construction permits)
 - 381 homes completed in 2026 so far — **reporting lag**, not the real pace: the city
   backfills certificates of occupancy for a year+ (2025 ended at 3,034 the same way), plus
   ~-100 net from HOPE SF phased demolition (Sunnydale, 700 Missouri St).
@@ -74,6 +74,25 @@ Two corrections applied this session:
 - **Docs** — README + CLAUDE.md updated to the two-stage model and the "cumulative stock"
   framing; dropped the dead pmtiles/vector-basemap references (we use keyless Esri raster).
 - `.claude/launch.json` so the app's preview button serves the site.
+
+## The "middle of a project's life" gap (from the 2918 Mission St question)
+
+The pipeline is not a complete registry of what's building. 2918 Mission St (75 homes,
+foundation work underway per SF YIMBY Aug 2026) was missing because:
+- not in the current Development Pipeline snapshot at all (entitled 2018, aged off);
+- its type-1 new-construction permit is from 2018 - outside our 24-month window;
+- its only recent permit is type-3 ("temporary shoring for new construction", 2026).
+
+**Fixed:** we now also pull type-3 **site-work permits** (shoring / excavation / tower crane
+/ soldier piles for new construction, with a unit count, last 24 months) and file them as
+*under construction*. Caught 2918 Mission + 3 others (939/951 Eddy, 105 Wisteria Ln);
+the rest dedupe against the pipeline. `config/sources.py` -> `GROUNDWORK_*`.
+
+**Residual gap:** a project whose new-construction permit is 3+ years old and which has no
+recent site-work permit yet is still invisible. Fully closing this needs permit
+*status/inspection* history (DBI PTS milestones), not just permit issuance. Also: site-work
+permits carry no demolition info, so their "replaces" text defaults to "a vacant or low-use
+lot" even when they cleared a building (2918 Mission replaced a laundromat).
 
 ## Still open
 

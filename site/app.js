@@ -445,9 +445,12 @@ function renderFooter() {
   $("#footer").innerHTML = `
     <div>Built from the City &amp; County of San Francisco open data portal.
     <b>Under construction</b> and <b>permitted</b> come from the Planning Department's quarterly
-    Development Pipeline, topped up with new-construction permits the Dept. of Building Inspection
-    issued in the last 24 months. Only projects with an <b>issued</b> construction permit are
-    counted &mdash; ones merely approved or applied for are left out.
+    Development Pipeline, topped up with Dept. of Building Inspection permits from the last 24
+    months: new-construction permits (&rarr; permitted) and site-work permits &mdash; shoring,
+    excavation, tower crane &mdash; that mark a project breaking ground (&rarr; under construction),
+    since a big project's new-construction permit is often years old by the time it starts.
+    Only projects with an <b>issued</b> permit are counted; ones merely approved or applied for
+    are left out.
     <b>Completed ${S.summary.year || ""}</b> counts net certificates of occupancy from Housing
     Production and runs low early in the year because the city backfills it for months
     (it can also dip when phased public-housing rebuilds demolish before the replacements finish).
