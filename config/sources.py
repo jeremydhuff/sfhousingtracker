@@ -111,6 +111,15 @@ STAGE_OF_STATUS = {
 }
 STAGE_LABEL = {"under_construction": "under construction", "permitted": "permitted"}
 
+# Manual net-unit corrections, keyed by pipeline case_no. Use ONLY when the digest's
+# "possibly stale net_pipeline_units" check flags a row and you've confirmed the real
+# current scope against SF Planning. Keep a one-line note with the source.
+UNIT_OVERRIDES = {
+    # 1580 Beach St: net_pipeline_units=9, but case 2025-000742PRJ was revised to
+    # "add a total of three ADU units ... not six as previously proposed".
+    "2025-000742PRJ": 3,
+}
+
 # DBI's "analysis neighborhood" names vs the pipeline's nhood41 names.
 NEIGHBORHOOD_ALIASES = {
     "castro/upper market": "Castro - Upper Market",

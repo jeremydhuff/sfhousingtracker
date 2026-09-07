@@ -1,6 +1,6 @@
 # SF housing tracker - digest (2026-09-07)
 
-- Under construction: **3,589 homes** in 436 projects (4 from DBI site-work permits)
+- Under construction: **3,583 homes** in 436 projects (4 from DBI site-work permits)
 - Permitted (not yet started): **1,790 homes** in 126 projects (16 from recent DBI permits)
 - Completed in 2026 so far: **381 homes** (283 BMR) in 156 projects
   - 2025 full year: 3,034 (city backfills completions for months, so 2026 runs low)
@@ -21,4 +21,5 @@
 - Collapsed pipeline re-entries this build: **19** (-27 double-counted homes removed). 603 San Bruno Ave, Adu - 2320 Funston Avenue, 428 15th Ave, 938 Jamestown Ave, 950 Jamestown Ave, 1187 Palou Ave
 - Still sharing a block/lot after that (kept as distinct buildings - eyeball): 2 groups, ~139 homes past the largest row on each. 11 Frida Kahlo Wy, 969 Oakdale Av
 - DBI permits dropped as pipeline duplicates: handled in build_permit_projects; residual address collisions here should be 0 -> got 0.
-- Small 'Adds' tail (<=4 homes, nothing demolished): 352 projects = 430 homes (8.0% of active). Decide if these belong in the headline or a separate line.
+- Possibly stale net_pipeline_units (description names a much smaller count): **0**. none
+- Small 'Adds' tail (<=4 homes, nothing demolished): 353 projects = 433 homes (8.1% of active). Decide if these belong in the headline or a separate line.

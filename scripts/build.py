@@ -170,14 +170,53 @@ def pim_url(address: str, blocklot: str) -> str:
     return f"https://sfplanninggis.org/pim/?search={quote(q)}"
 
 
+_WORDNUM = {"one": 1, "two": 2, "three": 3, "four": 4, "five": 5, "six": 6,
+           "seven": 7, "eight": 8, "nine": 9, "ten": 10}
+# "revised ... to <N> ... units" - the specific "scope was cut" construction.
+_REVISED_COUNT_RE = re.compile(
+    r"(?:revis\w+|reduc\w+|amend\w+|decreas\w+)"
+    r".{0,170}?\b(one|two|three|four|five|six|seven|eight|nine|ten|\d{1,2})\s+"
+    r"(?:new\s+|total\s+|additional\s+)*"
+    r"(?:adus?|accessory dwelling units?|dwelling units?|residential units?|units?)\b"
+    r"(?!\s*(?:at\s|earning|up to|[,\s]*\d{1,3}\s*%|\s*ami))",  # not an AMI-tier breakdown
+    re.I,
+)
+
+
+def stale_unit_count(description: str, net: int) -> int | None:
+    """If a *revised* planning description names a much smaller unit count than
+    net_pipeline_units, that field is probably stale. Returns the described
+    count, or None. Deliberately narrow - only the "revised down to N units"
+    construction, not every small number in the text.
+
+    e.g. 1580 Beach St: net_pipeline_units=9 but the description says
+    "To revise the previously approved application ... to add a total of three
+    ADU units ... not six as previously proposed".
+    """
+    if net < 5 or not description:
+        return None
+    m = _REVISED_COUNT_RE.search(description)
+    if not m:
+        return None
+    tok = m.group(1).lower()
+    n = _WORDNUM.get(tok, int(tok) if tok.isdigit() else 0)
+    return n if 0 < n * 2 <= net else None
+
+
 # ---------------------------------------------------------------------- transforms
-def build_projects(media: dict) -> list[dict]:
-    out = []
+def build_projects(media: dict) -> tuple[list[dict], list[dict]]:
+    out, stale = [], []
+    overrides = getattr(S, "UNIT_OVERRIDES", {})
     for r in load("pipeline"):
-        units = iint(r.get("net_pipeline_units"))
+        case_no = (r.get("case_no") or "").strip()
+        raw_units = iint(r.get("net_pipeline_units"))
+        units = overrides.get(case_no, raw_units)
         if units <= 0:
             continue
-        case_no = (r.get("case_no") or "").strip()
+        described = stale_unit_count(r.get("description_planning") or "", units)
+        if described is not None:
+            stale.append({"name": clean_name(r.get("nameaddr", ""), ""),
+                          "net": units, "described": described})
         blklot = norm_blocklot(r.get("blklot"))
         pid = case_no or f"BL{blklot}"
         addr = street_address(r.get("nameaddr", ""))
@@ -210,7 +249,7 @@ def build_projects(media: dict) -> list[dict]:
             "media": media.get(pid),
         }
         out.append(rec)
-    return out
+    return out, stale
 
 
 def _collapse_reentries(records: list[dict]) -> tuple[list[dict], list[dict]]:
@@ -494,7 +533,8 @@ def audit(projects: list[dict]) -> dict:
     }
 
 
-def write_digest(summary: dict, projects: list[dict], reentries: list[dict] | None = None) -> None:
+def write_digest(summary: dict, projects: list[dict], reentries: list[dict] | None = None,
+                 stale_counts: list[dict] | None = None) -> None:
     today = dt.date.today().isoformat()
     prev = None
     if SNAP.exists():
@@ -541,6 +581,7 @@ def write_digest(summary: dict, projects: list[dict], reentries: list[dict] | No
 
     a = audit(projects)
     reentries = reentries or []
+    stale_counts = stale_counts or []
     lines += [
         "",
         "## Data checks",
@@ -552,6 +593,10 @@ def write_digest(summary: dict, projects: list[dict], reentries: list[dict] | No
         f"largest row on each. {', '.join(a['dup_blocklot_examples']) or 'none'}",
         f"- DBI permits dropped as pipeline duplicates: handled in build_permit_projects; "
         f"residual address collisions here should be 0 -> got {a['permit_addr_dups']}.",
+        f"- Possibly stale net_pipeline_units (description names a much smaller count): "
+        f"**{len(stale_counts)}**. "
+        + (", ".join(f"{s['name']} ({s['net']}->~{s['described']})" for s in stale_counts[:6])
+           or "none"),
         f"- Small 'Adds' tail (<=4 homes, nothing demolished): {a['small_adds_projects']} "
         f"projects = {a['small_adds_units']:,} homes ({a['small_adds_unit_pct']}% of active). "
         f"Decide if these belong in the headline or a separate line.",
@@ -566,7 +611,7 @@ def main() -> None:
     if MEDIA_JSON.exists():
         media = {m["project_id"]: m for m in json.loads(MEDIA_JSON.read_text("utf-8"))}
 
-    pipeline = build_projects(media)
+    pipeline, stale_counts = build_projects(media)
     pipeline, reentries = _collapse_reentries(pipeline)
     blocklots = {p["blocklot"] for p in pipeline if p["blocklot"]}
     addr_keys = {_addr_key(p["address"]) for p in pipeline}
@@ -602,7 +647,7 @@ def main() -> None:
     if MANIFEST.exists():
         dump("manifest.json", json.loads(MANIFEST.read_text("utf-8")))
 
-    write_digest(summary, projects, reentries)
+    write_digest(summary, projects, reentries, stale_counts)
 
     print(f"  under construction  {summary['under_construction_units']:>6,d} homes / "
           f"{summary['under_construction_projects']} projects")

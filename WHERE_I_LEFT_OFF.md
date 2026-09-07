@@ -123,6 +123,7 @@ lot" even when they cleared a building (2918 Mission replaced a laundromat).
 
 | file | role |
 |---|---|
+| `METHODOLOGY.md` | **the data-collection spec** - what counts, every source, every caveat. Start here. |
 | `config/sources.py` | dataset IDs, SoQL filters, stage map, neighborhood aliases, "replaces" keyword maps |
 | `config/scrape_sources.py` | ordered scraper plugin list + politeness knobs |
 | `scripts/build.py` | all transform + digest logic; `derive_change()` = adds/replaces, `audit()` = data checks |

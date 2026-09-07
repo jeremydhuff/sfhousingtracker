@@ -32,8 +32,9 @@ data/
   snapshots/    one row per update -> the "over time" chart
 ```
 
-See **CLAUDE.md** for the update runbook and common tweaks, and
-**WHERE_I_LEFT_OFF.md** for current build status.
+See **[METHODOLOGY.md](METHODOLOGY.md)** for exactly what counts and every data caveat,
+**CLAUDE.md** for the update runbook and common tweaks, and **WHERE_I_LEFT_OFF.md** for
+current build status.
 
 ## What the labels mean
 

@@ -4,6 +4,10 @@ A local, occasionally-updated site tracking housing that is **under construction
 **issued building permit** in San Francisco, plus **homes completed this year** (rolls
 over automatically on Jan 1). Data from the DataSF open-data portal. No API key required.
 
+**[METHODOLOGY.md](METHODOLOGY.md) is the source of truth for what counts, where every
+number comes from, and every known way the data can mislead you.** Read it before changing
+a filter or investigating a number that looks wrong.
+
 ## The one command
 
 ```bash
