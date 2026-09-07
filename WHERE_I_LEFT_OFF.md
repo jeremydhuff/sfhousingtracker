@@ -12,21 +12,36 @@ python scripts/update.py      # fetch + build + scrape images + snapshot
 python scripts/serve.py       # http://localhost:8000   (or: preview "site" in the app)
 ```
 
-## Current numbers (2026-09-07)
+## Current numbers (2026-09-07, after the accuracy pass)
 
-- 3,589 homes under construction / 436 projects (4 from DBI site-work permits)
+- 3,328 homes under construction / 435 projects (3 from DBI site-work permits)
 - 1,790 homes permitted / 126 projects (16 from recent DBI new-construction permits)
 - 381 homes completed in 2026 so far — **reporting lag**, not the real pace: the city
   backfills certificates of occupancy for a year+ (2025 ended at 3,034 the same way), plus
   ~-100 net from HOPE SF phased demolition (Sunnydale, 700 Missouri St).
-- 558 projects, 5,085 homes total
-- BMR (below-market-rate) share where known: **59.6%** — verified. SF's
+- 561 projects total
+- BMR (below-market-rate) share where known: **60.9%** — verified. SF's
   actually-permitted-and-building housing right now is dominated by 100%-BMR projects
   (300 De Haro 425u, 758 Pacific 175u, 1633 Valencia, 2970 16th, Balboa Reservoir...);
   market-rate has stalled. Both stages independently ~60%. Real, not a bug.
   (Term is "BMR" everywhere user-facing now, per your call; data keys stay `affordable_*`.)
 
-Two corrections applied this session:
+Accuracy pass (night 3): re-checked the top ~15 by unit count against SF YIMBY /
+developer profiles / DBI permits.
+- **750 Golden Gate "Phase 1"**: net_pipeline_units=171 was the full two-phase
+  total; Phase 1 (the row under construction) is 75. `UNIT_OVERRIDES` → 75.
+- **105 Wisteria Ln** (159): Balboa Reservoir Building A's tower-crane permit,
+  filed on its own street address + sub-parcel — a duplicate of the pipeline's
+  11 Frida Kahlo Wy (159, under construction). `build_permit_projects` now also
+  drops a site-work permit when its assessor *block* carries a pipeline project
+  with the same unit count.
+- Net: −255 under construction (3,583 → 3,328).
+- Verified correct, left alone: 300 De Haro (425), 1101-1123 Sutter (303 / 102
+  BMR), 400 Divisadero (203), 1939 Market (187), Balboa Blocks A + E, 758 Pacific.
+- 199 Vidal Dr (Parkmerced, BP Issued since 2018) is a genuinely stale
+  entitlement but still correctly "permitted, not started" — left in.
+
+Two corrections applied earlier this session:
 - **Issued permits only.** `CONSTRUCTION_STATUSES` dropped `"BP Approved"` — a project counts
   as "permitted" only once a construction permit is actually issued (`BP Issued`), not just
   Planning-approved. Cut permitted from 4,197 -> 1,790 homes; removed stale entitlements like

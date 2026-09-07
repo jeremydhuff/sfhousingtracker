@@ -125,7 +125,12 @@ Layered, in `scripts/build.py`:
    **any** of its parcels *or* addresses matches a pipeline project. (An earlier
    bug checked only one address row at a time, so a permit spanning two lots —
    one matching, one not — slipped through: 758 & 772 Pacific Ave was a 175-home
-   ghost.)
+   ghost.) A **site-work** permit is *also* dropped when its assessor *block*
+   (not block/lot) carries a pipeline project with the **same unit count** — a
+   master development files each building's crane/shoring permit under its own
+   new street address and a fresh sub-parcel that matches neither the pipeline
+   row's block/lot nor its address (105 Wisteria Ln 3180/201, the tower-crane
+   permit for the 159-unit pipeline building at 11 Frida Kahlo Wy 3180190).
 3. **Groundwork vs new-construction permit** — if a site has both, the groundwork
    permit wins (it's the "under construction" signal); the other is dropped.
 4. Everything that's left and still shares a block/lot is **kept** but **listed
@@ -156,6 +161,7 @@ must not trigger a "Replaces".
 |---|---|---|
 | **The pipeline is not a complete registry.** Projects entitled years ago that are only now starting can be absent entirely. | Undercount of "under construction". | Site-work permits (§3) close much of this. A project with an old new-construction permit and no recent site-work permit is still invisible — fully fixing needs DBI permit *status/inspection* history. |
 | **`net_pipeline_units` can be stale** when a project is revised. 1580 Beach St shows 9; the description says it was cut to 3 ADUs "not six as previously proposed". | Small per-project overcount. | Digest flags the "revised down to N units" construction (`stale_unit_count`). Confirm against SF Planning, then add a `config/sources.py` → `UNIT_OVERRIDES` entry keyed by `case_no` (1580 Beach → 3 is already there). |
+| **`net_pipeline_units` can be a multi-phase total** on a row named for one phase. 750 Golden Gate Ave "Phase 1" showed 171 — the full two-phase count; Phase 1 (the row under construction) is 75. | Per-project overcount until the later phase actually files. | Spot-check any row whose name contains "Phase" against the developer's project profile; `UNIT_OVERRIDES` (750 GG → 75 is there). |
 | **Completions lag.** DBI files certificates of occupancy for a year+ after buildings open. | Current-year completions read far too low (2025 sat low all year, ended at 3,034). | Chart shows annual bars with the current year hatched + "still being reported"; comparison figure is prior-year *full*. |
 | **Quarterly snapshot.** A pipeline row marked "Construction" could already be finished. | Stale "under construction" entries. | Spot-check the top ~15 each refresh against SF Planning / DBI. |
 | **`demo_units` is under-populated** (~29 of ~560 rows). | A real teardown with a blank demo count reads as "Adds". | Charitable reading, follows the city's own field; noted in the site footer. |
