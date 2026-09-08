@@ -7,6 +7,11 @@ homes under construction, homes with an issued building permit, and homes
 All data comes from the City & County of San Francisco open data portal
 ([data.sfgov.org](https://data.sfgov.org)). No API key, no build step, no framework.
 
+**Live site: <https://jeremydhuff.github.io/sfhousingtracker/>** — the static `site/`
+folder, redeployed by GitHub Actions (`.github/workflows/pages.yml`) on every push to
+`master` that touches it. A data refresh only reaches the live site once you commit the
+regenerated `site/data/*.json` and push.
+
 ## Quick start
 
 ```bash

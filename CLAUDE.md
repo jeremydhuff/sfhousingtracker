@@ -18,8 +18,12 @@ Runs: fetch DataSF → build site JSON → scrape missing project images → rec
 rebuild. Then it prints `data/summary.md`. Read that digest, sanity-check the numbers, then:
 
 ```bash
-git add -A && git commit -m "data refresh $(date +%F)"
+git add -A && git commit -m "data refresh $(date +%F)" && git push
 ```
+
+The push redeploys the live site at <https://jeremydhuff.github.io/sfhousingtracker/>
+(GitHub Actions, `.github/workflows/pages.yml`, ~20s). Nothing reaches the public site
+until `site/data/*.json` is committed and pushed.
 
 Preview locally any time:
 
