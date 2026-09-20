@@ -45,7 +45,37 @@ async function boot() {
   renderLedger();
   renderCharts();
   buildTable();
+  renderMega();
   renderFooter();
+}
+
+/* ------------------------------------------------- entitled megaprojects */
+async function renderMega() {
+  let m;
+  try {
+    const r = await fetch("data/megaprojects.json?" + Date.now());
+    if (!r.ok) return;
+    m = await r.json();
+  } catch (e) { return; }
+  if (!m.projects || !m.projects.length) return;
+  $("#mega-lede").textContent =
+    "Master-planned projects that are entitled and have started infrastructure or phased " +
+    "construction, but whose remaining homes have no issued building permit, so the counts " +
+    "above leave them out. Figures are full-buildout plans, not homes being built now. " +
+    "Hand-curated from press coverage; checked " + m.as_of + ".";
+  $("#mega-list").innerHTML = m.projects.map((p) => {
+    const src = p.source_url
+      ? `<a href="${esc(p.source_url)}" target="_blank" rel="noopener">${esc(p.source_label)}</a>`
+      : esc(p.source_label);
+    return `<li>
+      <div class="mh"><span class="mn">${esc(p.name)}</span>
+        <span class="ma">${esc(p.area)}</span>
+        <span class="mu" title="${esc(p.homes_note || "")}">~${p.homes.toLocaleString()} homes planned</span></div>
+      <div class="ms">${esc(p.status)}</div>
+      <div class="mg">${esc(p.gap)} <span class="msrc">${src}</span></div>
+    </li>`;
+  }).join("");
+  $("#mega").hidden = false;
 }
 
 /* ------------------------------------------------------------ masthead */

@@ -15,6 +15,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
 
+from config import megaprojects as MEGA  # noqa: E402
 from config import sources as S  # noqa: E402
 
 RAW = ROOT / "data" / "raw"
@@ -660,6 +661,7 @@ def main() -> None:
     dump("summary.json", summary)
     dump("timeseries.json", timeseries)
     dump("media.json", list(media.values()))
+    dump("megaprojects.json", {"as_of": MEGA.AS_OF, "projects": MEGA.MEGAPROJECTS})
     if MANIFEST.exists():
         dump("manifest.json", json.loads(MANIFEST.read_text("utf-8")))
 
