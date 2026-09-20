@@ -16,7 +16,7 @@ import urllib.error
 import urllib.parse
 import urllib.request
 
-BASE = "https://data.sfgov.org/resource/{rid}.json"
+BASE = "https://data.sf.gov/resource/{rid}.json"
 PAGE = 50_000            # Socrata hard max rows per page
 TIMEOUT = 60
 MAX_RETRIES = 5
@@ -75,6 +75,6 @@ def query(resource_id: str, params: dict | None = None, *, paginate: bool = True
 
 def metadata(resource_id: str) -> dict:
     """Fetch dataset metadata (name, rowsUpdatedAt, columns)."""
-    url = f"https://data.sfgov.org/api/views/{resource_id}.json"
+    url = f"https://data.sf.gov/api/views/{resource_id}.json"
     data = _request(url)
     return data if isinstance(data, dict) else {}

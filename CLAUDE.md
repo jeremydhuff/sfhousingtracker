@@ -31,6 +31,26 @@ Preview locally any time:
 python scripts/serve.py        # http://localhost:8000
 ```
 
+### Quick, token-efficient update (the default when asked to "update the tracker")
+
+Do exactly this and nothing more:
+
+1. Run `python scripts/update.py 2>&1 | tail -40` — one call. Don't `cat`/Read `data/raw/`, `site/data/*.json`,
+   or scraper output; the tail already shows per-step progress.
+2. Read only `data/summary.md` (~20 lines). Sanity-check the "Data checks" block; investigate
+   (and open METHODOLOGY.md) only if a number jumped or a check is flagged.
+3. Commit and push only if the user asked: `git add -A && git commit -m "data refresh $(date +%F)" && git push`.
+4. Launch the preview with `preview_start {name: "site"}` (from `.claude/launch.json`) rather than
+   running `serve.py` through Bash. Reload the tab with the site running instead of restarting it.
+
+Use `--no-scrape` when only the numbers matter (skips image fetching, the slowest step).
+
+**If the fetch fails:** a 403/301 from Socrata means the host changed. The portal moved from
+`data.sfgov.org` to `data.sf.gov` (Sept 2026); `data.sf.gov` is now set in `scripts/socrata.py` and
+`config/sources.py`. Check with
+`curl -sI 'https://data.sf.gov/resource/6jgi-cpb4.json?$limit=1'` before touching code. Don't
+debug further by reading raw payloads; look at the HTTP status and the first 300 chars of the body.
+
 ### Flags
 
 - `--no-scrape` — skip image fetching (fast; data only).

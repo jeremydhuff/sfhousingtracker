@@ -620,6 +620,26 @@
   "bytes": 65171
  },
  {
+  "project_id": "PERMIT-202401224367",
+  "slug": "permit-202401224367",
+  "path": "media/permit-202401224367.jpg",
+  "source": "parcel_aerial",
+  "source_url": "https://www.arcgis.com/home/item.html?id=10df2279f9684e4a9f6a7f08febac2a9",
+  "caption": "The site today - aerial imagery (Esri World Imagery)",
+  "fetched_at": "2026-09-20T21:10:14.783041+00:00",
+  "bytes": 62076
+ },
+ {
+  "project_id": "PERMIT-202401224379",
+  "slug": "permit-202401224379",
+  "path": "media/permit-202401224379.jpg",
+  "source": "parcel_aerial",
+  "source_url": "https://www.arcgis.com/home/item.html?id=10df2279f9684e4a9f6a7f08febac2a9",
+  "caption": "The site today - aerial imagery (Esri World Imagery)",
+  "fetched_at": "2026-09-20T21:10:20.282079+00:00",
+  "bytes": 62538
+ },
+ {
   "project_id": "PERMIT-202512151804",
   "slug": "permit-202512151804",
   "path": "media/permit-202512151804.jpg",
@@ -628,5 +648,15 @@
   "caption": "The site today - aerial imagery (Esri World Imagery)",
   "fetched_at": "2026-09-07T19:20:32.982667+00:00",
   "bytes": 63342
+ },
+ {
+  "project_id": "PERMIT-202603197916",
+  "slug": "permit-202603197916",
+  "path": "media/permit-202603197916.jpg",
+  "source": "parcel_aerial",
+  "source_url": "https://www.arcgis.com/home/item.html?id=10df2279f9684e4a9f6a7f08febac2a9",
+  "caption": "The site today - aerial imagery (Esri World Imagery)",
+  "fetched_at": "2026-09-20T21:10:06.148510+00:00",
+  "bytes": 63450
  }
 ]

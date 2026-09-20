@@ -7,7 +7,7 @@ All resource IDs and filters here were verified live against the API. If the cit
 retires a dataset, update the id / field map below — nothing else needs to change.
 """
 
-DOMAIN = "data.sfgov.org"
+DOMAIN = "data.sf.gov"
 
 # --- "Real progress" definition -------------------------------------------------
 # Which pipeline statuses count as "actually being built". Order = display order.

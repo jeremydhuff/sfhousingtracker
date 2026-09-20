@@ -1,11 +1,11 @@
-# SF housing tracker - digest (2026-09-07)
+# SF housing tracker - digest (2026-09-20)
 
-- Under construction: **3,328 homes** in 435 projects (3 from DBI site-work permits)
-- Permitted (not yet started): **1,790 homes** in 126 projects (16 from recent DBI permits)
-- Completed in 2026 so far: **381 homes** (283 BMR) in 156 projects
+- Under construction: **3,328 homes** in 435 projects (-255 since last update) (3 from DBI site-work permits)
+- Permitted (not yet started): **1,790 homes** in 126 projects (no change) (16 from recent DBI permits)
+- Completed in 2026 so far: **362 homes** (283 BMR) in 162 projects (-19 since last update)
   - 2025 full year: 3,034 (city backfills completions for months, so 2026 runs low)
 - BMR (below-market-rate) share where known: 60.9%
-- Project images on file: 54/561 (10%)
+- Project images on file: 57/561 (10%)
 
 ## Biggest active projects
 - 425 homes - 300 De Haro St (under construction, Mission Bay) - replaces ground-floor retail
