@@ -84,6 +84,28 @@ should never be read wholesale.
   commercial. (An early bug counted these because `existing_units` is always
   null for permit types 1/2; the fix is the explicit `>= 1`.)
 
+### Entitled megaprojects with site work under way (listed, not counted)
+
+A separate, hand-curated section on the site (`config/megaprojects.py` →
+`site/data/megaprojects.json`). These are master-planned projects that are
+entitled (`PL Approved`) and have begun infrastructure or phased construction, but
+whose remaining homes have no issued **building** permit, so they fail the counting
+rules above and are shown beside — never inside — the headline numbers. Figures
+are full-buildout plans, not homes being built now.
+
+**Why this exists.** Candlestick Point (~7,200 homes) broke ground on roads and
+utilities in Sept 2026 but has no housing building permit: the Pipeline row is
+`PL Approved` (9,637, an old combined Candlestick / Shipyard II plan), and its only
+related grading permit is `filed`, not issued. DBI type-3 site-work permits (the
+groundwork signal, §3) don't cover master-plan grading and utilities either.
+
+**Maintenance rule.** Review the list every refresh. Remove a project once its
+buildings appear as `Construction` / `BP Issued` (then they count automatically),
+and require a dated source for every entry. Checked and *not* listed as of
+2026-09-20: Stonestown (entitled 2024, no site work found) and India Basin (park
+construction only; developer Build Inc. in loan default). Mission Rock, Pier 70,
+Schlage Lock, Parkmerced and Hunters Point Shipyard were not researched.
+
 ### Completed this year
 
 `xdht-4php` rows with `latest_completion_date` in the current calendar year
@@ -162,6 +184,7 @@ must not trigger a "Replaces".
 | **The pipeline is not a complete registry.** Projects entitled years ago that are only now starting can be absent entirely. | Undercount of "under construction". | Site-work permits (§3) close much of this. A project with an old new-construction permit and no recent site-work permit is still invisible — fully fixing needs DBI permit *status/inspection* history. |
 | **`net_pipeline_units` can be stale** when a project is revised. 1580 Beach St shows 9; the description says it was cut to 3 ADUs "not six as previously proposed". | Small per-project overcount. | Digest flags the "revised down to N units" construction (`stale_unit_count`). Confirm against SF Planning, then add a `config/sources.py` → `UNIT_OVERRIDES` entry keyed by `case_no` (1580 Beach → 3 is already there). |
 | **`net_pipeline_units` can be a multi-phase total** on a row named for one phase. 750 Golden Gate Ave "Phase 1" showed 171 — the full two-phase count; Phase 1 (the row under construction) is 75. | Per-project overcount until the later phase actually files. | Spot-check any row whose name contains "Phase" against the developer's project profile; `UNIT_OVERRIDES` (750 GG → 75 is there). |
+| **Megaprojects with infrastructure-only work are invisible to the counts.** Candlestick Point broke ground Sept 2026 with no housing building permit. | Real activity, zero homes counted. | Listed in the "Entitled, site work under way" section (§3), hand-maintained in `config/megaprojects.py`. |
 | **Completions lag.** DBI files certificates of occupancy for a year+ after buildings open. | Current-year completions read far too low (2025 sat low all year, ended at 3,034). | Chart shows annual bars with the current year hatched + "still being reported"; comparison figure is prior-year *full*. |
 | **Quarterly snapshot.** A pipeline row marked "Construction" could already be finished. | Stale "under construction" entries. | Spot-check the top ~15 each refresh against SF Planning / DBI. |
 | **`demo_units` is under-populated** (~29 of ~560 rows). | A real teardown with a blank demo count reads as "Adds". | Charitable reading, follows the city's own field; noted in the site footer. |
@@ -199,6 +222,7 @@ Printed every run. Not auto-corrected — these are flags for a human:
 | tune the "breaking ground" signal | `GROUNDWORK_PHRASES`, `GROUNDWORK_MIN_UNITS`, `GROUNDWORK_LOOKBACK_MONTHS` |
 | change neighborhood name reconciliation | `NEIGHBORHOOD_ALIASES` |
 | adjust "replaces" phrasing | `NONRES_EXISTING`, `REPLACES_KEYWORDS`, `_TEARDOWN_KW` in `build.py` |
+| add/remove an entitled megaproject on the site | `config/megaprojects.py` → `MEGAPROJECTS` (needs a dated source) |
 | correct a wrong unit count | `config/sources.py` → `UNIT_OVERRIDES[case_no] = n` (only after confirming) |
 | all SoQL filters | `scripts/fetch.py` → `build_where` |
 | all transform + dedup + audit logic | `scripts/build.py` |

@@ -71,6 +71,7 @@ debug further by reading raw payloads; look at the HTTP status and the first 300
 | Change what counts as "under construction" | `config/sources.py` → `CONSTRUCTION_STATUSES` |
 | Widen the "recent permits" window | `config/sources.py` → `PERMIT_LOOKBACK_MONTHS` |
 | Add a hand-picked rendering for a project | drop `media/manual/<slug>.jpg` (slug = `slug` field in `site/data/projects.json`) and add `{"<slug>": "caption"}` to `media/manual/captions.json`, then `python -m scripts.scrape --rescrape` |
+| Add/remove an "entitled, site work under way" megaproject (e.g. Candlestick) | `config/megaprojects.py` → `MEGAPROJECTS`, then `python scripts/build.py`. Review it each refresh. |
 | Fetch images for more/smaller projects | `config/scrape_sources.py` → `MIN_UNITS_FOR_IMAGE`, `MAX_IMAGES` |
 | Add a new image source | new file in `scripts/scrape/` subclassing `ImageSource`; add the class to `ENABLED_SOURCES` in `config/scrape_sources.py` |
 
