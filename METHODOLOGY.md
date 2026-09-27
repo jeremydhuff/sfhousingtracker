@@ -242,3 +242,11 @@ Then `git add -A && git commit`.
 
 `data/snapshots/history.jsonl` gains one row per day → the "under construction
 over time" chart.
+
+**"What changed since last time"** is in the digest too, for free: `build_changes` in
+`scripts/build.py` diffs this run's projects/completions against the *previous* run's
+own `site/data/*.json` (read before this run overwrites them) by project id, and lists
+what broke ground, what got newly permitted, and what completed. No raw data is
+re-read to answer this. `data/changes.jsonl` keeps the uncapped list, one line per run,
+for history older than what the digest shows. Skipped on the very first run (nothing to
+diff against).

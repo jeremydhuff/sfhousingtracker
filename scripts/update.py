@@ -53,18 +53,22 @@ def main() -> None:
     fetch.main()
 
     print("\n2/4  building site data ...")
-    build.main()
+    # build.main() runs up to 3x per refresh below; each rebuild would otherwise read
+    # the *previous call's own output* as "the last run" and the real since-last-refresh
+    # diff would collapse to zero. Capture the true pre-refresh baseline once and thread
+    # it through every call; only the final call (whose output actually sticks) logs it.
+    baseline = build.main(log_changes=False)
 
     if "--no-scrape" in args:
         print("\n3/4  skipping image scrape (--no-scrape)")
     else:
         print("\n3/4  scraping project images ...")
         scrape_run(force="--rescrape" in args)
-        build.main()  # fold new media into projects.json
+        build.main(baseline, log_changes=False)  # fold new media into projects.json
 
     print("\n4/4  recording snapshot ...")
     snapshot()
-    build.main()  # timeseries now includes today
+    build.main(baseline, log_changes=True)  # timeseries now includes today
 
     print("\n" + "=" * 60)
     print((ROOT / "data" / "summary.md").read_text("utf-8"))

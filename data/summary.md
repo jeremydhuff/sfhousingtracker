@@ -1,11 +1,11 @@
-# SF housing tracker - digest (2026-09-20)
+# SF housing tracker - digest (2026-09-27)
 
-- Under construction: **3,328 homes** in 435 projects (-255 since last update) (3 from DBI site-work permits)
-- Permitted (not yet started): **1,790 homes** in 126 projects (no change) (16 from recent DBI permits)
-- Completed in 2026 so far: **362 homes** (283 BMR) in 162 projects (-19 since last update)
+- Under construction: **3,328 homes** in 435 projects (no change) (3 from DBI site-work permits)
+- Permitted (not yet started): **1,794 homes** in 128 projects (+4 since last update) (18 from recent DBI permits)
+- Completed in 2026 so far: **366 homes** (283 BMR) in 165 projects (+4 since last update)
   - 2025 full year: 3,034 (city backfills completions for months, so 2026 runs low)
 - BMR (below-market-rate) share where known: 60.9%
-- Project images on file: 57/561 (10%)
+- Project images on file: 57/563 (10%)
 
 ## Biggest active projects
 - 425 homes - 300 De Haro St (under construction, Mission Bay) - replaces ground-floor retail
@@ -17,9 +17,20 @@
 - 165 homes - 1290 3rd St (permitted, Mission Bay) - replaces a vacant or low-use lot
 - 159 homes - 11 Frida Kahlo Wy (under construction, West of Twin Peaks) - replaces a vacant or low-use lot
 
+## Changed since 2026-09-20
+**Started construction** (0)
+- none
+**Newly permitted** (2)
+- 3 homes - 1200 Egbert Av (Bayview Hunters Point)
+- 1 homes - 1424 Underwood Av (Bayview Hunters Point)
+**Completed** (3)
+- 2 homes - 2011 Filbert St (Marina, 2026-09-18)
+- 1 homes - 678A Head St (Oceanview/Merced/Ingleside, 2026-09-17)
+- 1 homes - 328 Mount Vernon Av (Outer Mission, 2026-09-16)
+
 ## Data checks
 - Collapsed pipeline re-entries this build: **19** (-27 double-counted homes removed). 603 San Bruno Ave, Adu - 2320 Funston Avenue, 428 15th Ave, 938 Jamestown Ave, 950 Jamestown Ave, 1187 Palou Ave
 - Still sharing a block/lot after that (kept as distinct buildings - eyeball): 2 groups, ~139 homes past the largest row on each. 11 Frida Kahlo Wy, 969 Oakdale Av
 - DBI permits dropped as pipeline duplicates: handled in build_permit_projects; residual address collisions here should be 0 -> got 0.
 - Possibly stale net_pipeline_units (description names a much smaller count): **0**. none
-- Small 'Adds' tail (<=4 homes, nothing demolished): 353 projects = 433 homes (8.5% of active). Decide if these belong in the headline or a separate line.
+- Small 'Adds' tail (<=4 homes, nothing demolished): 354 projects = 434 homes (8.5% of active). Decide if these belong in the headline or a separate line.

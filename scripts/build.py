@@ -20,6 +20,7 @@ from config import sources as S  # noqa: E402
 
 RAW = ROOT / "data" / "raw"
 SNAP = ROOT / "data" / "snapshots" / "history.jsonl"
+CHANGES_LOG = ROOT / "data" / "changes.jsonl"
 MEDIA_JSON = ROOT / "data" / "media.json"
 SUMMARY_MD = ROOT / "data" / "summary.md"
 OUT = ROOT / "site" / "data"
@@ -545,8 +546,78 @@ def audit(projects: list[dict]) -> dict:
     }
 
 
+def build_changes(prev_projects: list[dict], projects: list[dict],
+                  prev_completions: list[dict], completions_year: list[dict]) -> dict:
+    """Diff this run against the previous run's *already-written* output files.
+
+    Cheap and reads nothing extra: `prev_projects` / `prev_completions` are just last
+    run's site/data/projects.json / completions.json, loaded before this run's dump()
+    overwrites them. Lets a human (or Claude, off the digest alone - no need to read
+    raw data or diff two full JSON files by hand) see what actually changed between
+    two runs: which projects broke ground, which got a permit, which finished.
+    """
+    prev_by_id = {p["id"]: p for p in prev_projects}
+    prev_completion_keys = {
+        (c.get("blocklot") or _addr_key(c.get("address", "")), c.get("completion_date"))
+        for c in prev_completions
+    }
+
+    newly_permitted = [
+        p for p in projects
+        if p["stage"] == "permitted" and p["id"] not in prev_by_id
+    ]
+    started_construction = [
+        p for p in projects
+        if p["stage"] == "under_construction"
+        and (p["id"] not in prev_by_id or prev_by_id[p["id"]]["stage"] == "permitted")
+    ]
+    newly_completed = [
+        c for c in completions_year
+        if (c.get("blocklot") or _addr_key(c.get("address", "")), c.get("completion_date"))
+        not in prev_completion_keys
+    ]
+    newly_completed.sort(key=lambda c: c["completion_date"], reverse=True)
+
+    return {
+        "newly_permitted": newly_permitted,
+        "started_construction": started_construction,
+        "newly_completed": newly_completed,
+    }
+
+
+def write_changes_log(changes: dict, since: str | None, today: str) -> None:
+    """Append one line to data/changes.jsonl - a running, git-tracked audit trail.
+
+    Skipped on the very first run (nothing to diff against) so it never records a
+    false "everything is new."
+    """
+    if not since:
+        return
+    row = {
+        "date": today,
+        "since": since,
+        "newly_permitted": [
+            {"id": p["id"], "name": p["name"], "net_units": p["net_units"],
+             "neighborhood": p["neighborhood"]} for p in changes["newly_permitted"]
+        ],
+        "started_construction": [
+            {"id": p["id"], "name": p["name"], "net_units": p["net_units"],
+             "neighborhood": p["neighborhood"]} for p in changes["started_construction"]
+        ],
+        "newly_completed": [
+            {"address": c["address"], "net_units": c["net_units"],
+             "neighborhood": c["neighborhood"], "completion_date": c["completion_date"]}
+            for c in changes["newly_completed"]
+        ],
+    }
+    CHANGES_LOG.parent.mkdir(parents=True, exist_ok=True)
+    with CHANGES_LOG.open("a", encoding="utf-8") as f:
+        f.write(json.dumps(row, separators=(",", ":")) + "\n")
+
+
 def write_digest(summary: dict, projects: list[dict], reentries: list[dict] | None = None,
-                 stale_counts: list[dict] | None = None) -> None:
+                 stale_counts: list[dict] | None = None,
+                 changes: dict | None = None, changes_since: str | None = None) -> None:
     today = dt.date.today().isoformat()
     prev = None
     if SNAP.exists():
@@ -591,6 +662,26 @@ def write_digest(summary: dict, projects: list[dict], reentries: list[dict] | No
             f"({S.STAGE_LABEL[p['stage']]}, {p['neighborhood']}) - {p['change'].lower()}"
         )
 
+    if changes is not None:
+        lines += ["", f"## Changed since {changes_since or 'last run'}"]
+
+        def cap(rows, fmt, n=12):
+            out = [fmt(r) for r in rows[:n]]
+            if len(rows) > n:
+                out.append(f"- +{len(rows) - n} more - see data/changes.jsonl")
+            return out or ["- none"]
+
+        lines.append(f"**Started construction** ({len(changes['started_construction'])})")
+        lines += cap(changes["started_construction"],
+                     lambda p: f"- {p['net_units']:,} homes - {p['name']} ({p['neighborhood']})")
+        lines.append(f"**Newly permitted** ({len(changes['newly_permitted'])})")
+        lines += cap(changes["newly_permitted"],
+                     lambda p: f"- {p['net_units']:,} homes - {p['name']} ({p['neighborhood']})")
+        lines.append(f"**Completed** ({len(changes['newly_completed'])})")
+        lines += cap(changes["newly_completed"],
+                     lambda c: f"- {c['net_units']:,} homes - {c['address']} "
+                               f"({c['neighborhood']}, {c['completion_date']})")
+
     a = audit(projects)
     reentries = reentries or []
     stale_counts = stale_counts or []
@@ -617,11 +708,40 @@ def write_digest(summary: dict, projects: list[dict], reentries: list[dict] | No
 
 
 # ---------------------------------------------------------------------------- main
-def main() -> None:
+def _load_out(name: str) -> list | dict:
+    p = OUT / name
+    return json.loads(p.read_text("utf-8")) if p.exists() else ([] if name != "summary.json" else {})
+
+
+def main(prev_state: dict | None = None, log_changes: bool = True) -> dict:
+    """Build site/data/*.json + the digest.
+
+    `prev_state` / `log_changes` exist because `update.py` calls this 2-3 times per
+    refresh (build, fold in scraped media, fold in today's snapshot point) - without
+    them, the 2nd/3rd call would read the 1st call's own just-written output as "the
+    previous run" and the real since-last-refresh diff would collapse to zero. Pass
+    `None` (the default) for a single standalone `python scripts/build.py` run, which
+    self-loads the previous run's baseline from disk exactly once, as before. A caller
+    making several calls in one refresh should capture this function's return value
+    from the first call and pass it as `prev_state` to the rest, with `log_changes`
+    true only on the last one - see `update.py`.
+    """
     OUT.mkdir(parents=True, exist_ok=True)
     media = {}
     if MEDIA_JSON.exists():
         media = {m["project_id"]: m for m in json.loads(MEDIA_JSON.read_text("utf-8"))}
+
+    # Baseline to diff against: the previous refresh's own output, read before this
+    # run's dump() overwrites it. Free: no raw data, no extra fetch, just the small
+    # files this same script wrote last time.
+    if prev_state is None:
+        prev_state = {
+            "projects": _load_out("projects.json"),
+            "completions": _load_out("completions.json"),
+            "since": (_load_out("summary.json").get("generated_at") or "")[:10] or None,
+        }
+    prev_projects, prev_completions = prev_state["projects"], prev_state["completions"]
+    changes_since = prev_state["since"]
 
     pipeline, stale_counts = build_projects(media)
     pipeline, reentries = _collapse_reentries(pipeline)
@@ -642,6 +762,9 @@ def main() -> None:
 
     completions_year, monthly, annual = build_completions()
     summary = build_summary(projects, completions_year, monthly)
+    changes = build_changes(prev_projects, projects, prev_completions, completions_year)
+    if log_changes:
+        write_changes_log(changes, changes_since, summary["generated_at"][:10])
 
     history = []
     if SNAP.exists():
@@ -665,7 +788,7 @@ def main() -> None:
     if MANIFEST.exists():
         dump("manifest.json", json.loads(MANIFEST.read_text("utf-8")))
 
-    write_digest(summary, projects, reentries, stale_counts)
+    write_digest(summary, projects, reentries, stale_counts, changes, changes_since)
 
     print(f"  under construction  {summary['under_construction_units']:>6,d} homes / "
           f"{summary['under_construction_projects']} projects")
@@ -673,7 +796,13 @@ def main() -> None:
           f"{summary['permitted_projects']} projects "
           f"(+{len(permit_projects)} from DBI permits)")
     print(f"  completed {YEAR}       {summary['completed_this_year_units']:>6,d} homes")
+    if changes_since:
+        print(f"  since {changes_since}:      "
+              f"{len(changes['started_construction'])} broke ground, "
+              f"{len(changes['newly_permitted'])} newly permitted, "
+              f"{len(changes['newly_completed'])} completed")
     print(f"  wrote {OUT.relative_to(ROOT)}/*.json and {SUMMARY_MD.relative_to(ROOT)}")
+    return prev_state
 
 
 if __name__ == "__main__":

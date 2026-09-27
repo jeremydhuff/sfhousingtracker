@@ -36,9 +36,14 @@ python scripts/serve.py        # http://localhost:8000
 Do exactly this and nothing more:
 
 1. Run `python scripts/update.py 2>&1 | tail -40` — one call. Don't `cat`/Read `data/raw/`, `site/data/*.json`,
-   or scraper output; the tail already shows per-step progress.
-2. Read only `data/summary.md` (~20 lines). Sanity-check the "Data checks" block; investigate
-   (and open METHODOLOGY.md) only if a number jumped or a check is flagged.
+   or scraper output; the tail already shows per-step progress, including a one-line
+   "since &lt;date&gt;: N broke ground, N newly permitted, N completed" summary.
+2. Read only `data/summary.md` (~20-40 lines depending on how much changed). Sanity-check the
+   "Data checks" block; investigate (and open METHODOLOGY.md) only if a number jumped or a check
+   is flagged. The "Changed since &lt;date&gt;" section (`build_changes` in `scripts/build.py`) is
+   the answer to "what happened since I last ran this" — it's a diff against the previous run's
+   own output files, not a re-read of raw data, so it costs nothing extra. `data/changes.jsonl`
+   holds the same lists uncapped, one line per run, if you need older history than the digest kept.
 3. Commit and push only if the user asked: `git add -A && git commit -m "data refresh $(date +%F)" && git push`.
 4. Launch the preview with `preview_start {name: "site"}` (from `.claude/launch.json`) rather than
    running `serve.py` through Bash. Reload the tab with the site running instead of restarting it.
@@ -62,6 +67,11 @@ debug further by reading raw payloads; look at the HTTP status and the first 300
   and aggregation happen in the SoQL query (`scripts/fetch.py`) and in `scripts/build.py`.
 - The scraper writes only `data/media.json` (a small manifest). It never surfaces scraped HTML/PDF.
 - To review a run, read **`data/summary.md`** (~20 lines) and the `update.py` stdout diff.
+- **"What changed since last time" never requires diffing two full JSON files by hand.**
+  `build.py` reads the *previous* run's `site/data/projects.json` / `completions.json` (still on
+  disk, about to be overwritten) before writing this run's, diffs by project id, and prints the
+  result straight into `data/summary.md` and `data/changes.jsonl`. Answering "which homes broke
+  ground / got permitted / finished since I last checked" is a one-file read, not a raw-data query.
 
 ## Common changes
 
