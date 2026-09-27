@@ -100,8 +100,12 @@ debug further by reading raw payloads; look at the HTTP status and the first 300
   buildings (phased megaprojects) are kept and listed in the digest for a human to check.
 - **Completions lag.** The city backfills `xdht-4php` for a year or more, so the current-year
   bar in the "Homes completed per year" chart is always far from final. The chart says so.
-- **Palette is paper-only** — no dark mode. Off-white ground, dark blueprint/ochre map markers,
-  in every OS theme (`site/style.css`, `:root { color-scheme: light }`).
+- **Palette is white-ground, no dark mode**, in every OS theme (`site/style.css`,
+  `:root { color-scheme: light }`). One typeface (Archivo, self-hosted variable woff2) and
+  a semantic accent set: blue = under construction (the page's subject), orange = permitted
+  (the less-common case), green = completions / BMR share. Never alternate blue/orange for
+  variety — each always means the same stage. Ported from the user's `design-style.md`
+  analytical-chart house system; see the provenance comment at the top of `site/style.css`.
 - **Renderings are sparse.** `parcel_aerial` (keyless Esri aerial) covers essentially every
   project. `wikimedia` finds CC renderings/construction photos for the marquee projects
   (net units ≥ 120); `sf_planning` rarely hits; `commission_packets` is a stub (PDF image

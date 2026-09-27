@@ -10,7 +10,6 @@ import functools
 import http.server
 import os
 import re
-import socketserver
 import sys
 from pathlib import Path
 
@@ -68,8 +67,11 @@ class Handler(http.server.SimpleHTTPRequestHandler):
 
 def main() -> None:
     os.chdir(SITE)
-    socketserver.TCPServer.allow_reuse_address = True
-    with socketserver.TCPServer(("127.0.0.1", PORT), Handler) as httpd:
+    # ThreadingHTTPServer, not TCPServer: a plain TCPServer handles one request at a
+    # time, so hovering across several map markers (each firing an image fetch) queues
+    # up and the OS starts refusing connections once the backlog fills - previews
+    # silently stop loading. allow_reuse_address is already on for HTTPServer.
+    with http.server.ThreadingHTTPServer(("127.0.0.1", PORT), Handler) as httpd:
         print(f"serving {SITE}  ->  http://localhost:{PORT}   (Ctrl+C to stop)")
         try:
             httpd.serve_forever()

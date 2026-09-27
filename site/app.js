@@ -12,9 +12,9 @@ const STAGE = {
 const cssVar = (n, d) =>
   getComputedStyle(document.documentElement).getPropertyValue(n).trim() || d;
 const COLOR = {
-  built: cssVar("--blueprint", "#1a3a5c"),
-  permit: cssVar("--ochre", "#9a5b12"),
-  ink: cssVar("--ink", "#12100e"),
+  built: cssVar("--blue", "#006e93"),
+  permit: cssVar("--orange", "#b0491f"),
+  ink: cssVar("--ink", "#0f1113"),
 };
 
 const S = {
@@ -127,7 +127,7 @@ function renderMap() {
   $("#maplegend").innerHTML = `
     <span class="legend-key" data-k="under_construction"><span class="g built"></span> under construction</span>
     <span class="legend-key" data-k="permitted"><span class="g permit"></span> permitted</span>
-    <span style="color:var(--faint)">circle area &prop; homes &middot; click a key to isolate</span>`;
+    <span style="color:var(--ink-3)">circle area &prop; homes &middot; click a key to isolate</span>`;
   $$(".legend-key").forEach((k) => k.addEventListener("click", () =>
     setFilter("stage", S.filters.stage === k.dataset.k ? "" : k.dataset.k)));
 
@@ -220,7 +220,7 @@ function chartCompletions() {
   const pat = tag("pattern", { id: "cc-hatch", width: 7, height: 7,
     patternTransform: "rotate(45)", patternUnits: "userSpaceOnUse" });
   pat.append(tag("line", { x1: 0, y1: 0, x2: 0, y2: 7,
-    stroke: "var(--verdigris)", "stroke-width": 3.5 }));
+    stroke: "var(--green)", "stroke-width": 3.5 }));
   defs.append(pat);
   s.append(defs);
 
@@ -234,12 +234,12 @@ function chartCompletions() {
     const v = annual[yEach], partial = yEach === yr;
     const top = y(v), h = Math.max(1, y(0) - top);
     s.append(tag("rect", { x: bx(i) - bw / 2, y: top, width: bw, height: h,
-      fill: partial ? "url(#cc-hatch)" : "var(--verdigris)",
-      stroke: "var(--verdigris)", "stroke-width": partial ? 1 : 0 }));
+      fill: partial ? "url(#cc-hatch)" : "var(--green)",
+      stroke: "var(--green)", "stroke-width": partial ? 1 : 0 }));
     s.append(tag("text", { x: bx(i), y: top - 5, "text-anchor": "middle", fill: "var(--ink)" },
       num(v)));
     s.append(tag("text", { x: bx(i), y: H - 9, "text-anchor": "middle",
-      fill: partial ? "var(--verdigris)" : "var(--faint)" },
+      fill: partial ? "var(--green)" : "var(--ink-3)" },
       partial ? `${yEach}→` : String(yEach)));
   });
   box.append(s);
