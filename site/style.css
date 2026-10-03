@@ -242,7 +242,10 @@ code { font-family: var(--code); }
 .controls .clear { cursor: pointer; color: var(--ink-3); text-decoration: underline; }
 
 table.idx { width: 100%; border-collapse: collapse; font-size: 13px; min-width: 620px; }
+/* own scroll area so the long list doesn't take over the page */
+.idx-scroll { max-height: 560px; overflow: auto; border-bottom: 1px solid var(--rule); }
 table.idx th {
+  position: sticky; top: 0; z-index: 1; background: var(--bg, #fff);
   text-align: left;
   border-bottom: 2px solid var(--ink);
   padding: 6px 14px 6px 0;
