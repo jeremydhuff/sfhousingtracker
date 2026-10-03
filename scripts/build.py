@@ -590,6 +590,21 @@ def audit(projects: list[dict]) -> dict:
     }
 
 
+def _cert_check(summary: dict) -> str:
+    """Guard the completions top-up: a silent fetch failure would drop ~160 homes."""
+    n_certs = len(load("completion_certs"))
+    gross = summary.get("completed_gross_units", 0) or 1
+    from_c = summary.get("completed_from_certificates", 0)
+    flag = ""
+    if n_certs == 0:
+        flag = " **WARNING: no certificate rows - completions are Production-only (low).**"
+    elif from_c / gross > 0.35:
+        flag = " **WARNING: certificates are >35% of completions - look for double-counting.**"
+    return (f"- Completions top-up: {n_certs:,} certificate rows pulled; "
+            f"{from_c:,} of {gross:,} gross completed homes are certificate-only "
+            f"({100 * from_c / gross:.0f}%; was 25% on 2026-10-02).{flag}")
+
+
 def build_changes(prev_projects: list[dict], projects: list[dict],
                   prev_completions: list[dict], completions_year: list[dict]) -> dict:
     """Diff this run against the previous run's *already-written* output files.
@@ -615,10 +630,14 @@ def build_changes(prev_projects: list[dict], projects: list[dict],
         if p["stage"] == "under_construction"
         and (p["id"] not in prev_by_id or prev_by_id[p["id"]]["stage"] == "permitted")
     ]
+    # A certificate-only row later backfilled into Production changes key (blocklot, date),
+    # so also match on address + units to avoid reporting the same homes as completed twice.
+    prev_addr_units = {(_addr_key(c.get("address", "")), c.get("net_units")) for c in prev_completions}
     newly_completed = [
         c for c in completions_year
         if (c.get("blocklot") or _addr_key(c.get("address", "")), c.get("completion_date"))
         not in prev_completion_keys
+        and (_addr_key(c.get("address", "")), c.get("net_units")) not in prev_addr_units
     ]
     newly_completed.sort(key=lambda c: c["completion_date"], reverse=True)
 
@@ -736,6 +755,7 @@ def write_digest(summary: dict, projects: list[dict], reentries: list[dict] | No
     lines += [
         "",
         "## Data checks",
+        _cert_check(summary),
         f"- Collapsed pipeline re-entries this build: **{len(reentries)}** "
         f"(-{sum(r['net_units'] for r in reentries):,} double-counted homes removed). "
         f"{', '.join(r['name'] for r in reentries[:6]) or 'none'}",

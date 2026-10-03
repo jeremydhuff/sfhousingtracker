@@ -27,6 +27,7 @@
 - none
 
 ## Data checks
+- Completions top-up: 1,869 certificate rows pulled; 166 of 664 gross completed homes are certificate-only (25%; 25% on 2026-10-02).
 - Collapsed pipeline re-entries this build: **19** (-27 double-counted homes removed). 603 San Bruno Ave, Adu - 2320 Funston Avenue, 428 15th Ave, 938 Jamestown Ave, 950 Jamestown Ave, 1187 Palou Ave
 - Still sharing a block/lot after that (kept as distinct buildings - eyeball): 2 groups, ~139 homes past the largest row on each. 11 Frida Kahlo Wy, 969 Oakdale Av
 - DBI permits dropped as pipeline duplicates: handled in build_permit_projects; residual address collisions here should be 0 -> got 0.

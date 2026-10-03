@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-10-03T03:38:52.099745+00:00",
+  "generated_at": "2026-10-03T03:41:04.981049+00:00",
   "sources": [
     {
       "source": "pipeline",
       "title": "San Francisco Development Pipeline",
       "resource_id": "6jgi-cpb4",
-      "fetched_at": "2026-10-03T03:38:53.328157+00:00",
+      "fetched_at": "2026-10-03T03:41:07.115990+00:00",
       "source_updated_at": "2026-08-28T22:33:29+00:00",
       "row_count": 561,
       "where": "current_status in ('Construction', 'BP Issued') and (net_pipeline_units::number) > 0"
@@ -14,7 +14,7 @@
       "source": "permits",
       "title": "Building Permits",
       "resource_id": "i98e-djp9",
-      "fetched_at": "2026-10-03T03:38:54.316479+00:00",
+      "fetched_at": "2026-10-03T03:41:08.085400+00:00",
       "source_updated_at": "2026-10-02T12:30:56+00:00",
       "row_count": 126,
       "where": "(permit_type in ('1', '2') and status in ('issued', 'reinstated') and proposed_units IS NOT NULL and (proposed_units::number) >= 1 and issued_date > '2024-10-12T00:00:00') or (permit_type = '3' and status in ('issued', 'reinstated') and (proposed_units::number) >= 10 and issued_date > '2024-10-12T00:00:00' and (upper(description) like '%SHORING FOR NEW%' or upper(description) like '%SHORING AND EXCAVATION%' or upper(description) like '%EXCAVATION FOR NEW%' or upper(description) like '%FOUNDATION FOR NEW%' or upper(description) like '%TOWER CRANE%' or upper(description) like '%SOLDIER PILE%' or upper(description) like '%SOLDIER BEAM%'))"
@@ -23,7 +23,7 @@
       "source": "completions",
       "title": "Housing Production 2005-present",
       "resource_id": "xdht-4php",
-      "fetched_at": "2026-10-03T03:38:55.353860+00:00",
+      "fetched_at": "2026-10-03T03:41:09.799201+00:00",
       "source_updated_at": "2026-10-02T05:05:29+00:00",
       "row_count": 2042,
       "where": "latest_completion_date >= '2020-01-01T00:00:00'"
@@ -32,7 +32,7 @@
       "source": "completion_certs",
       "title": "Dwelling Unit Completion Counts by Building Permit",
       "resource_id": "j67f-aayr",
-      "fetched_at": "2026-10-03T03:38:56.484356+00:00",
+      "fetched_at": "2026-10-03T03:41:10.494322+00:00",
       "source_updated_at": "2026-09-04T21:38:50+00:00",
       "row_count": 1869,
       "where": "date_issued >= '2020-01-01T00:00:00'"

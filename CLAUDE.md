@@ -107,6 +107,12 @@ debug further by reading raw payloads; look at the HTTP status and the first 300
   a new case (`_collapse_reentries`, keyed on block/lot) and drops any DBI permit whose parcel
   *or* address matches a pipeline project. Rows sharing a block/lot that look like real distinct
   buildings (phased megaprojects) are kept and listed in the digest for a human to check.
+- **Completions = best estimate, not raw Production.** `build_completions` tops up `xdht-4php`
+  with `j67f-aayr` certificates for permits Production lacks (current + prior year only), net of
+  losses; see METHODOLOGY.md "Completed this year". Each digest has a "Completions top-up" check:
+  if it says WARNING (0 certificate rows = fetch failed; >35% cert share = possible double count),
+  fix before pushing. Cert-only homes are gross and have no neighborhood/BMR. A big one-time jump
+  in "Completed" right after a methodology change is expected, not a data problem.
 - **Completions lag.** The city backfills `xdht-4php` for a year or more, so the current-year
   bar in the "Homes completed per year" chart is always far from final. The chart says so.
 - **Palette is white-ground, no dark mode**, in every OS theme (`site/style.css`,
