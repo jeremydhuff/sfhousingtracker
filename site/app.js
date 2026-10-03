@@ -94,7 +94,7 @@ function renderMasthead() {
       sub: `${s.permitted_projects} projects` },
     { cls: "done", n: num(s.completed_this_year_units),
       lbl: `homes finished in ${s.year} so far`,
-      sub: `${num(s.completed_prev_year_full)} in all of ${s.year - 1}` },
+      sub: `${num(s.completed_gross_units)} completed &minus; ${num(s.completed_lost_units)} lost &middot; ${num(s.completed_prev_year_full)} in all of ${s.year - 1}` },
     { cls: "aff", n: (s.affordable_active_pct || 0) + "%",
       lbl: "BMR, where the count is known",
       sub: `${num(s.affordable_active_units)} homes` },
@@ -481,9 +481,12 @@ function renderFooter() {
     since a big project's new-construction permit is often years old by the time it starts.
     Only projects with an <b>issued</b> permit are counted; ones merely approved or applied for
     are left out.
-    <b>Completed ${S.summary.year || ""}</b> counts net certificates of occupancy from Housing
-    Production and runs low early in the year because the city backfills it for months
-    (it can also dip when phased public-housing rebuilds demolish before the replacements finish).
+    <b>Completed ${S.summary.year || ""}</b> is our best estimate, net of losses: dated completions
+    from Housing Production, plus certificates of occupancy (TCO/CFC) for permits Production
+    hasn't backfilled yet, minus homes lost to demolition or mergers. Certificate-only homes
+    are gross (their demolitions aren't known yet) and have no neighborhood or BMR data.
+    It still runs somewhat low early in the year, and can dip when phased public-housing
+    rebuilds demolish before the replacements finish.
     <b>Adds vs. replaces</b> is read from the city's recorded demolition and existing-use fields:
     "adds" when nothing is torn down (ADUs, additions), "replaces" for teardowns and new
     construction on vacant or parking lots.

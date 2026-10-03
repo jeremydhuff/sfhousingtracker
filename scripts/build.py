@@ -415,6 +415,44 @@ def build_completions() -> tuple[list[dict], dict, dict]:
                 "description": (r.get("description") or "").strip()[:240],
             })
 
+    # Top up with certificate-of-occupancy records (TCO/CFC) for permits Housing Production
+    # hasn't backfilled yet. Per permit we take the largest certificate (an initial TCO and
+    # its later CFC cover the same homes), skip permits already in Production under any
+    # year (their cert date is a data-entry slip) and certs dated before the permit was
+    # filed or in the future. Only the current and prior year are topped up: older years are
+    # final in Production, and certs missing there are other definitions, not lag. Cert units are gross: demolitions are only known from Production.
+    prod_bpa = {r.get("bpa") for r in rows}
+    today = dt.date.today().isoformat()
+    certs: dict[str, list[dict]] = defaultdict(list)
+    for r in load("completion_certs"):
+        certs[r.get("building_permit_application") or ""].append(r)
+    for bpa, docs in certs.items():
+        units = max(iint(d.get("number_of_units_certified")) for d in docs)
+        d0 = min((d.get("date_issued") or "")[:10] for d in docs)
+        filed = bpa[:8]
+        if (not bpa or bpa in prod_bpa or units <= 0 or not d0 or d0 > today
+                or (len(bpa) == 12 and bpa.isdigit() and filed > d0.replace("-", ""))):
+            continue
+        y, m = int(d0[:4]), int(d0[5:7])
+        if y < YEAR - 1:
+            continue  # older years are final in Production; cert-only extras are other definitions
+        monthly[y][m] += units
+        if y == YEAR:
+            addr = next((d.get("building_address") for d in docs if d.get("building_address")), "")
+            this_year.append({
+                "address": street_address(addr),
+                "neighborhood": "Unknown",
+                "net_units": units,
+                "affordable_units": 0,
+                "market_rate": 0,
+                "affordable_known": False,
+                "source": "certificate",
+                "completion_date": d0,
+                "blocklot": "",
+                "change": "",
+                "description": "Certificate of occupancy (not yet in Housing Production)",
+            })
+
     this_year.sort(key=lambda x: x["completion_date"], reverse=True)
 
     def cumulative(y: int) -> list[float]:
@@ -476,6 +514,9 @@ def build_summary(projects, completions_year, monthly) -> dict:
     known_units = sum(p["net_units"] for p in known)
     aff_active = sum(p["affordable_units"] for p in known)
     done_units = sum(c["net_units"] for c in completions_year)
+    done_gross = sum(c["net_units"] for c in completions_year if c["net_units"] > 0)
+    done_lost = -sum(c["net_units"] for c in completions_year if c["net_units"] < 0)
+    done_cert = sum(c["net_units"] for c in completions_year if c.get("source") == "certificate")
     done_aff = sum(c["affordable_units"] for c in completions_year)
     prev_full = int(round(monthly.get(str(YEAR - 1), [0] * 12)[-1]))
 
@@ -493,6 +534,9 @@ def build_summary(projects, completions_year, monthly) -> dict:
         "affordable_active_units": aff_active,
         "affordable_active_pct": round(100 * aff_active / known_units, 1) if known_units else 0,
         "completed_this_year_units": done_units,
+        "completed_gross_units": done_gross,
+        "completed_lost_units": done_lost,
+        "completed_from_certificates": done_cert,
         "completed_this_year_projects": len(completions_year),
         "completed_this_year_affordable": done_aff,
         "completed_prev_year_full": prev_full,
@@ -648,6 +692,10 @@ def write_digest(summary: dict, projects: list[dict], reentries: list[dict] | No
         f"- Completed in {summary['year']} so far: **{summary['completed_this_year_units']:,} homes** "
         f"({summary['completed_this_year_affordable']:,} BMR) "
         f"in {summary['completed_this_year_projects']} projects{delta('completed_this_year_units')}",
+        f"  - net of losses: {summary['completed_gross_units']:,} completed - "
+        f"{summary['completed_lost_units']:,} lost to demolition/merger "
+        f"({summary['completed_from_certificates']:,} of the completed are from certificates "
+        f"Housing Production hasn't backfilled)",
         f"  - {summary['year'] - 1} full year: {summary['completed_prev_year_full']:,} "
         f"(city backfills completions for months, so {summary['year']} runs low)",
         f"- BMR (below-market-rate) share where known: {summary['affordable_active_pct']}%",

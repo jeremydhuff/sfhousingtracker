@@ -2,8 +2,9 @@
 
 - Under construction: **3,328 homes** in 435 projects (no change) (3 from DBI site-work permits)
 - Permitted (not yet started): **1,794 homes** in 128 projects (no change) (18 from recent DBI permits)
-- Completed in 2026 so far: **369 homes** (283 BMR) in 168 projects (+3 since last update)
-  - 2025 full year: 3,034 (city backfills completions for months, so 2026 runs low)
+- Completed in 2026 so far: **535 homes** (283 BMR) in 218 projects (+169 since last update)
+  - net of losses: 664 completed - 129 lost to demolition/merger (166 of the completed are from certificates Housing Production hasn't backfilled)
+  - 2025 full year: 3,137 (city backfills completions for months, so 2026 runs low)
 - BMR (below-market-rate) share where known: 60.9%
 - Project images on file: 57/563 (10%)
 

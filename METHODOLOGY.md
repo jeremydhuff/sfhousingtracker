@@ -36,7 +36,7 @@ APR, or dashboards built on them — those are one year of permit or completion
 | `6jgi-cpb4` | SF Development Pipeline | quarterly | the spine: status, `net_pipeline_units`, `pipeline_affordable_units`, existing use, demo count, lat/long |
 | `i98e-djp9` | Building Permits (DBI) | nightly | new-construction + site-work permits the quarterly pipeline hasn't caught |
 | `xdht-4php` | Housing Production 2005–present | ~daily | dated completions → "completed this year" and the annual-completions chart |
-| `j67f-aayr` | Dwelling Unit Completion Counts | ~daily | pulled for cross-checking; not used downstream yet |
+| `j67f-aayr` | Dwelling Unit Completion Counts | ~daily | TCO/CFC certificates; tops up "completed this year" for permits `xdht-4php` hasn't backfilled |
 
 Affordable Housing Pipeline (`i88b-cd6x`) is configured but its endpoint 404s, so
 it's skipped every run.
@@ -250,3 +250,13 @@ what broke ground, what got newly permitted, and what completed. No raw data is
 re-read to answer this. `data/changes.jsonl` keeps the uncapped list, one line per run,
 for history older than what the digest shows. Skipped on the very first run (nothing to
 diff against).
+
+**Best-estimate top-up (added 2026-10-02).** `xdht-4php` lags, so `build_completions` also
+counts `j67f-aayr` certificates for permits absent from Production (any year). Per permit we
+take the largest certificate (a TCO and its later CFC cover the same homes) and drop certs
+dated in the future or before the permit was filed (data-entry slips: e.g. a "2026" CFC for
+a permit Production dates 2025, and one dated year 2205). Result for 2026-10-02: 498 from
+Production + 166 from certificates = 664 completed, minus 129 lost = 535 net. Certificate-only
+homes are *gross* (demolitions unknown), carry no neighborhood/BMR data, and show as such.
+Summary fields: `completed_gross_units`, `completed_lost_units`, `completed_from_certificates`.
+Outside check: a raw sum of 2026 certificates gives 602, close to the 601 gross Theo Jaffee quoted.

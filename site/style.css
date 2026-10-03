@@ -26,6 +26,7 @@
   --ink:       #0f1113;
   --ink-2:     #5c636b;
   --ink-3:     #9aa0a8;
+  --ink-label: #7b8189;   /* section eyebrows + stat labels: between ink-2 and ink-3 */
   --rule:      #e7e9eb;
   --rule-2:    #d8dbde;
   --axis:      #c9cdd1;
@@ -112,7 +113,7 @@ code { font-family: var(--code); }
   font-weight: 500;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: var(--ink-3);
+  color: var(--ink-label);
   margin-top: 10px;
   display: block;
 }
@@ -165,7 +166,7 @@ code { font-family: var(--code); }
   font-weight: 600;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: var(--ink-3);
+  color: var(--ink-label);
   border-top: 2px solid var(--ink);
   padding-top: 12px;
   margin: 0 0 16px;
