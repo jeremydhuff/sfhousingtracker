@@ -193,7 +193,6 @@ function note(t) {
 
 function renderCharts() {
   chartCompletions();
-  chartStage();
   chartHistory();
 }
 
@@ -243,39 +242,6 @@ function chartCompletions() {
       partial ? `${yEach}→` : String(yEach)));
   });
   box.append(s);
-
-  const recent = S.completions.slice(0, 3)
-    .map((c) => `${c.address} (${c.net_units})`).join("  ·  ");
-  if (recent) box.append(note("latest certificates: " + recent));
-}
-
-function chartStage() {
-  const box = $("#chart-stage");
-  const data = [
-    { label: "under construction", cls: "bar-uc", key: "under_construction" },
-    { label: "permitted", cls: "bar-permit", key: "permitted" },
-  ].map((d) => {
-    const ps = S.projects.filter((p) => p.stage === d.key);
-    return { ...d,
-      units: ps.reduce((a, p) => a + p.net_units, 0),
-      aff: ps.reduce((a, p) => a + (p.affordable_known ? p.affordable_units : 0), 0) };
-  });
-  // wide viewBox so it scales ~1:1 with the column and the type stays ~10px
-  const W = 640, H = 168, pl = 2, pr = 74, gap = 52, bh = 30;
-  const max = Math.max(1, ...data.map((d) => d.units));
-  const bw = (v) => Math.max(1, (v / max) * (W - pl - pr));
-  const s = svgEl(W, H);
-  data.forEach((d, i) => {
-    const yy = 22 + i * (bh + gap);
-    s.append(tag("text", { x: pl, y: yy - 8 },
-      `${d.label}${d.aff ? `  ·  ${num(d.aff)} BMR` : ""}`));
-    s.append(tag("rect", { class: d.cls, x: pl, y: yy, width: bw(d.units), height: bh }));
-    if (d.aff > 0)
-      s.append(tag("rect", { class: "bar-aff", x: pl, y: yy + bh - 4, width: bw(d.aff), height: 4 }));
-    s.append(tag("text", { x: pl + bw(d.units) + 8, y: yy + bh / 2 + 3.5, fill: "var(--ink)" },
-      num(d.units)));
-  });
-  box.append(s);
 }
 
 function chartHistory() {
@@ -287,7 +253,7 @@ function chartHistory() {
     return;
   }
   $("#hist-note").textContent = `${h.length} snapshots since ${h[0].date}.`;
-  const W = 420, H = 170, pl = 38, pr = 12, pt = 10, pb = 20;
+  const W = 640, H = 220, pl = 48, pr = 12, pt = 10, pb = 20;
   const vals = h.map((r) => r.under_construction_units);
   const hi = Math.max(...vals) * 1.06, lo = Math.min(...vals) * 0.94;
   const span = (hi - lo) || 1;

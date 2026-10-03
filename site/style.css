@@ -194,14 +194,17 @@ code { font-family: var(--code); }
 .charts { margin-top: 48px; }
 .chart-grid {
   display: grid;
-  grid-template-columns: 1.6fr 1fr;
-  gap: 34px 44px;
-  margin-top: 16px;
+  grid-template-columns: 1fr;
+  gap: 44px;
+  max-width: 760px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 32px;
 }
 @media (max-width: 900px) {
   .chart-grid { grid-template-columns: 1fr; gap: 30px; }
 }
-.chart { min-width: 0; }
+.chart { min-width: 0; align-self: start; }
 .chart .hd { font-weight: 600; font-size: 17px; letter-spacing: -0.01em; margin-bottom: 4px; }
 .chart .note {
   font-size: 13.5px; line-height: 1.5;
