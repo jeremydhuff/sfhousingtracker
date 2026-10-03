@@ -3,14 +3,18 @@
     python scripts/update.py            # fetch -> build -> scrape images -> snapshot
     python scripts/update.py --no-scrape
     python scripts/update.py --rescrape   # retry images for ALL projects
+    python scripts/update.py --no-push    # refresh locally, don't commit/push
 
-Prints a short digest. Read data/summary.md, sanity-check, then commit.
+Starts by fast-forwarding to GitHub and ends by committing + pushing, so this folder,
+the git repo and the live site all end the run identical. Prints a short digest.
 """
 
 from __future__ import annotations
 
 import datetime as dt
 import json
+import re
+import subprocess
 import sys
 from pathlib import Path
 
@@ -46,8 +50,39 @@ def snapshot() -> None:
     SNAP.write_text("\n".join(kept) + "\n", encoding="utf-8")
 
 
+def git(*a: str, check: bool = True) -> str:
+    r = subprocess.run(["git", *a], cwd=ROOT, capture_output=True, text=True)
+    if check and r.returncode:
+        sys.exit(f"git {' '.join(a)} failed: {r.stdout}{r.stderr}")
+    return r.stdout.strip()
+
+
+def sync_down() -> None:
+    """Fast-forward to origin so the run starts from what GitHub has."""
+    git("fetch", "origin")
+    git("pull", "--ff-only", "--autostash")
+
+
+def sync_up(summary_line: str) -> None:
+    """Commit everything and push, then confirm local == origin."""
+    git("add", "-A")
+    if git("status", "--porcelain"):
+        git("commit", "-m", f"data refresh {dt.date.today().isoformat()}; {summary_line}")
+    git("push", "origin", "HEAD")
+    git("fetch", "origin")
+    ahead_behind = git("rev-list", "--left-right", "--count", "HEAD...@{u}")
+    if ahead_behind.split() != ["0", "0"] or git("status", "--porcelain"):
+        sys.exit(f"NOT in sync with GitHub (ahead/behind: {ahead_behind})")
+    print(f"synced: local folder == origin == {git('rev-parse', '--short', 'HEAD')}")
+
+
 def main() -> None:
     args = set(sys.argv[1:])
+    push = "--no-push" not in args
+
+    if push:
+        print("0/5  syncing from GitHub ...")
+        sync_down()
 
     print("1/4  fetching DataSF ...")
     fetch.main()
@@ -71,7 +106,20 @@ def main() -> None:
     build.main(baseline, log_changes=True)  # timeseries now includes today
 
     print("\n" + "=" * 60)
-    print((ROOT / "data" / "summary.md").read_text("utf-8"))
+    summary = (ROOT / "data" / "summary.md").read_text("utf-8")
+    print(summary)
+
+    if push:
+        print("5/5  committing + pushing ...")
+
+        def n(label: str) -> str:
+            m = re.search(rf"\*\*{label}\*\* \((\d+)\)", summary)
+            return m[1] if m else "0"
+
+        sync_up(f"{n('Completed')} completed, {n('Newly permitted')} newly permitted, "
+                f"{n('Started construction')} broke ground")
+    else:
+        print("(--no-push: local only; GitHub not updated)")
 
 
 if __name__ == "__main__":

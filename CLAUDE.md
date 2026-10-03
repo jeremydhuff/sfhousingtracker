@@ -14,12 +14,10 @@ a filter or investigating a number that looks wrong.
 python scripts/update.py
 ```
 
-Runs: fetch DataSF → build site JSON → scrape missing project images → record a dated snapshot →
-rebuild. Then it prints `data/summary.md`. Read that digest, sanity-check the numbers, then:
-
-```bash
-git add -A && git commit -m "data refresh $(date +%F)" && git push
-```
+Runs: pull from GitHub → fetch DataSF → build site JSON → scrape missing project images → record a
+dated snapshot → rebuild → prints `data/summary.md` → **commits and pushes automatically**, then
+verifies local folder == `origin` (exits non-zero if not). Read the digest and sanity-check it; if a
+number looks wrong, fix and re-run. Use `--no-push` for a local-only dry run.
 
 The push redeploys the live site at <https://jeremydhuff.github.io/sfhousingtracker/>
 (GitHub Actions, `.github/workflows/pages.yml`, ~20s). Nothing reaches the public site
@@ -44,7 +42,7 @@ Do exactly this and nothing more:
    the answer to "what happened since I last ran this" — it's a diff against the previous run's
    own output files, not a re-read of raw data, so it costs nothing extra. `data/changes.jsonl`
    holds the same lists uncapped, one line per run, if you need older history than the digest kept.
-3. Commit and push only if the user asked: `git add -A && git commit -m "data refresh $(date +%F)" && git push`.
+3. Commit/push is built into `update.py` (skip with `--no-push`); nothing more to do.
 4. Launch the preview with `preview_start {name: "site"}` (from `.claude/launch.json`) rather than
    running `serve.py` through Bash. Reload the tab with the site running instead of restarting it.
 
@@ -58,6 +56,7 @@ debug further by reading raw payloads; look at the HTTP status and the first 300
 
 ### Flags
 
+- `--no-push` — don't pull/commit/push (local-only run).
 - `--no-scrape` — skip image fetching (fast; data only).
 - `--rescrape` — retry images for **every** project, not just ones missing an image.
 

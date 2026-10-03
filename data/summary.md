@@ -17,15 +17,13 @@
 - 165 homes - 1290 3rd St (permitted, Mission Bay) - replaces a vacant or low-use lot
 - 159 homes - 11 Frida Kahlo Wy (under construction, West of Twin Peaks) - replaces a vacant or low-use lot
 
-## Changed since 2026-09-27
+## Changed since 2026-10-03
 **Started construction** (0)
 - none
 **Newly permitted** (0)
 - none
-**Completed** (3)
-- 1 homes - 1808 Newhall St (Bayview Hunters Point, 2026-09-25)
-- 1 homes - 178 Montana St (Oceanview/Merced/Ingleside, 2026-09-24)
-- 1 homes - 112 Sussex St (Glen Park, 2026-09-22)
+**Completed** (0)
+- none
 
 ## Data checks
 - Collapsed pipeline re-entries this build: **19** (-27 double-counted homes removed). 603 San Bruno Ave, Adu - 2320 Funston Avenue, 428 15th Ave, 938 Jamestown Ave, 950 Jamestown Ave, 1187 Palou Ave
