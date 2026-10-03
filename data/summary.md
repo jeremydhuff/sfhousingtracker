@@ -1,8 +1,8 @@
-# SF housing tracker - digest (2026-09-27)
+# SF housing tracker - digest (2026-10-03)
 
 - Under construction: **3,328 homes** in 435 projects (no change) (3 from DBI site-work permits)
-- Permitted (not yet started): **1,794 homes** in 128 projects (+4 since last update) (18 from recent DBI permits)
-- Completed in 2026 so far: **366 homes** (283 BMR) in 165 projects (+4 since last update)
+- Permitted (not yet started): **1,794 homes** in 128 projects (no change) (18 from recent DBI permits)
+- Completed in 2026 so far: **369 homes** (283 BMR) in 168 projects (+3 since last update)
   - 2025 full year: 3,034 (city backfills completions for months, so 2026 runs low)
 - BMR (below-market-rate) share where known: 60.9%
 - Project images on file: 57/563 (10%)
@@ -17,16 +17,15 @@
 - 165 homes - 1290 3rd St (permitted, Mission Bay) - replaces a vacant or low-use lot
 - 159 homes - 11 Frida Kahlo Wy (under construction, West of Twin Peaks) - replaces a vacant or low-use lot
 
-## Changed since 2026-09-20
+## Changed since 2026-09-27
 **Started construction** (0)
 - none
-**Newly permitted** (2)
-- 3 homes - 1200 Egbert Av (Bayview Hunters Point)
-- 1 homes - 1424 Underwood Av (Bayview Hunters Point)
+**Newly permitted** (0)
+- none
 **Completed** (3)
-- 2 homes - 2011 Filbert St (Marina, 2026-09-18)
-- 1 homes - 678A Head St (Oceanview/Merced/Ingleside, 2026-09-17)
-- 1 homes - 328 Mount Vernon Av (Outer Mission, 2026-09-16)
+- 1 homes - 1808 Newhall St (Bayview Hunters Point, 2026-09-25)
+- 1 homes - 178 Montana St (Oceanview/Merced/Ingleside, 2026-09-24)
+- 1 homes - 112 Sussex St (Glen Park, 2026-09-22)
 
 ## Data checks
 - Collapsed pipeline re-entries this build: **19** (-27 double-counted homes removed). 603 San Bruno Ave, Adu - 2320 Funston Avenue, 428 15th Ave, 938 Jamestown Ave, 950 Jamestown Ave, 1187 Palou Ave
